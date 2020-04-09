@@ -31,8 +31,8 @@ class RegistrationApi(Resource):
             lng = data['long']
             password=data['password']
             electricity_bill_number=data['electricity_bill_number']
-            bunit=data['bunit']
-            ctype=data['ctype']
+            #bunit=data['bunit']
+            #ctype=data['ctype']
 
             #validates electricity_bill_number with mahadiscom api
             # if not self.isElectricityBillNumberValid(electricity_bill_number,bunit,ctype):
