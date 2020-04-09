@@ -11,8 +11,18 @@ from models.model import Merchant
 from models.model import Users
 from models.model import NormalUser
 from utils.database import db
+from api.commonApi.MahaDiscomApi import MahaDiscomApi
 
 class RegistrationApi(Resource):
+    def isElectricityBillNumberValid(self,electricity_bill_number,bunit,ctype):
+            mahadiscom = MahaDiscomApi(cn=electricity_bill_number, bun=bunit, ct=ctype)
+            billdetails = mahadiscom.get_bill_details()
+            if len(billdetails)>0:
+                return True
+            else:
+                return False
+            #return mahadiscom.is_consumer_valid()
+
     def registerNormalUser(self,data):
             phone = data['phone_number']
             firstname = data['firstName']
@@ -21,6 +31,13 @@ class RegistrationApi(Resource):
             lng = data['long']
             password=data['password']
             electricity_bill_number=data['electricity_bill_number']
+            bunit=data['bunit']
+            ctype=data['ctype']
+
+            #validates electricity_bill_number with mahadiscom api
+            # if not self.isElectricityBillNumberValid(electricity_bill_number,bunit,ctype):
+            #     return self.response("200","true","Invalid electricity_bill_number, Please verify with your bill", "")
+
             #Duplicate electricity bill number check
             normal_user=NormalUser.query.filter_by(electricity_bill_number=electricity_bill_number)
             merchant_id_ToSend = []
@@ -122,11 +139,10 @@ class RegistrationApi(Resource):
             elif(request_data["userType"]=="police"):
                 return self.registerPoliceUser(request_data)
                 
- 
             #return self.response("200","false","success", data)
         except Exception as err:
             logging.error(str(err))
-            result = None
+            return self.response("200","true",str(err), "")
 
 
     def response(self, responseCode,hasError,message,data):
