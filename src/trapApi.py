@@ -2,13 +2,14 @@ from flask_api import FlaskAPI, status, exceptions
 from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS, cross_origin
 from utils.ConfigReader import ConfigReader
-from api.GetAllMerchant import userApi.GetAllMerchant
-from api.InsertItem import InsertItem
-from api.Authenticate import Authenticate
-from api.GetAllMerchantByCategory import userApi.GetAllMerchantByCategory
-from api.GetAvailableSlotsApi import userApi.GetAvailableSlotsApi
-from api.ReturnSlotInformationApi import commonApi.ReturnSlotInformationApi
-from api.BookSlot import userApi.BookSlotApi
+from api.userApi.GetAllMerchant import GetAllMerchant
+from api.commonApi.Authenticate import Authenticate
+from api.userApi.GetAllMerchantByCategory import GetAllMerchantByCategory
+from api.userApi.GetAvailableSlotsApi import GetAvailableSlotsApi
+from api.commonApi.ReturnSlotInformationApi import ReturnSlotInformationApi
+from api.commonApi.RegistrationApi import RegistrationApi
+
+from api.userApi.BookSlotApi import BookSlotApi
 from flask_migrate import Migrate
 from utils.database import *
 import configparser
@@ -42,6 +43,8 @@ if __name__ == "__main__":
         api.add_resource(GetAvailableSlotsApi, "/getAvailableSlots")
         api.add_resource(BookSlotApi, "/bookSlot")
         api.add_resource(ReturnSlotInformationApi, "/getSlotInformation")
+        api.add_resource(RegistrationApi, "/register")
+        
         
         # api.add_resource(GenerateTestSuite, "/lma/generateTestSuite")
         #logging.info("Api Running on port %s " % (configReader.apiPort))

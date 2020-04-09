@@ -9,7 +9,6 @@ import sqlite3
 from sqlite3 import Error
 
 class GetProfileInfoApi(Resource):
-
     
     def post(self):
         try:

@@ -36,8 +36,8 @@ class NormalUser(db.Model):
     __tablename__ = 'normal_user'
     normal_user_id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     electricity_bill_number = db.Column(db.String, nullable=False)
-    lat = db.Column(db.String)
-    lng = db.Column(db.String)
+    lat = db.Column(db.Numeric(10,6))
+    lng = db.Column(db.Numeric(10,6))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     #user = db.relationship("Users", backref=db.backref("Users", uselist=False))
 
