@@ -22,24 +22,29 @@ class BookSlotApi(Resource):
         data = request.data
         start_time = data["start_time"]
         end_time = data["end_time"]
+        booking_date= data["booking_date"]
         user_id = data["user_id"]
         merchant_id = data["merchant_id"]
         try:
-            secretKey = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(16))
-            slot = Slot(user_id = user_id,merchant_id = merchant_id,startTime=start_time,endTime=end_time,status="active",qrCode=secretKey)
+            
+            datetime_object = datetime.strptime(booking_date, "%Y-%m-%d")
+            #secretKey = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(16))
+            slot = Slot(user_id = user_id,merchant_id = merchant_id,startime=int(start_time),endTime=int(end_time),booking_date=datetime_object,status="active",qrCode="weff")
             db.session.add(slot)
             db.session.commit()
-            data = {"qr_code":secretKey}
+
+            data = {"slot_id":slot.slot_id}
             message = "ok"
-            return self.response("200",data,message)
-        except threading.ThreadError as err:
-            message = "Error in booking slot"
-            return self.response("503", {}, message)
+            return self.response("200","false",data,message)
+        except Exception as err:
+            message = str(err)
+            return self.response("503", "true",{}, message)
 
 
-    def response(self, responseCode,data,message):
+    def response(self, responseCode,hasError,data,message):
         response = {}
         response['responseCode'] = responseCode
         response['message'] = message
+        response['hasError'] = hasError
         response['data'] = data
         return response

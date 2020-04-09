@@ -58,7 +58,7 @@ class RegistrationApi(Resource):
             # Duplicate phone number check
             user=Users.query.filter_by(phonenumber=phone)
             if user.count() > 0:
-                return self.response("200","true","Duplicate phone number", merchant_id_ToSend)
+                return self.response("200","true","Duplicate phone number", "")
 
             #Insert user if everything is unique
             new_user=Users(firstname=firstname,lastname=lastname,phonenumber=phone,passwordhash=password)
@@ -124,7 +124,7 @@ class RegistrationApi(Resource):
                 
  
             #return self.response("200","false","success", data)
-        except threading.ThreadError as err:
+        except Exception as err:
             logging.error(str(err))
             result = None
 

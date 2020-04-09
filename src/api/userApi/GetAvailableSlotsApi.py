@@ -13,6 +13,8 @@ import numpy as np
 from utils.Constants import max_available_slots
 from datetime import timedelta
 from datetime import datetime
+from utils.database import db
+from models.model import Merchant
 
 # from models.ModelHandler import ModelHandler
 
@@ -36,16 +38,17 @@ class GetAvailableSlotsApi(Resource):
     def post(self):
         try:
 
-            database = "/home/rboral/covidNew4.db"
+            database = "/Users/panssing/Downloads/generate_pass_2.0/covid19Hack/src/utils/covid4New.db"
             data = request.data
             merchant_id = data['merchant_id']
 
             conn = self.create_connection(database)
-            max_slots = self.getMaxSlots(conn, int(merchant_id))
-
+            #max_slots = self.getMaxSlots(conn, int(merchant_id))
+            merchant=Merchant.query.get(merchant_id)
+            # max_slots= db.session.query(Merchant.maxPeoplePerSlot).filter(Merchant.merchant_id==int(merchant_id))
+            # print(max_slots)
             available_slots = []
-
-            available_slots = self.get_available_slots(conn, int(merchant_id), int(max_slots))
+            available_slots = self.get_available_slots(conn, int(merchant_id), int(merchant.maxPeoplePerSlot))
             conn.close()
             return self.response("200", "success", available_slots)
         except threading.ThreadError as err:
@@ -74,8 +77,8 @@ class GetAvailableSlotsApi(Resource):
 
         hour = now2.hour
 
-        query = "Select startTime, COUNT(*) from slot where merchant_id = " + str(merchant_id) + \
-                " and booking_date = date('now') and startTime > " + str(hour) + " and status = 'active' group by startTime having COUNT(*) >= " + str(max_slots)
+        query = "Select startime, COUNT(*) from slot where merchant_id = " + str(merchant_id) + \
+                " and booking_date = date('now') and startime > " + str(hour) + " and status = 'active' group by startime having COUNT(*) >= " + str(max_slots)
         print(query)
         total_slots = []
         for i in range(max(8, hour + 1), 16):
@@ -105,8 +108,8 @@ class GetAvailableSlotsApi(Resource):
         a = 1
 
         while a > 0:
-            query = "Select startTime, COUNT(*) from Slot where merchant_id = " + str(merchant_id) + \
-                    " and booking_date = date('now', '" + str(a) +" day')  and status = 'active' group by startTime having COUNT(*) >= " + str(max_slots)
+            query = "Select startime, COUNT(*) from Slot where merchant_id = " + str(merchant_id) + \
+                    " and booking_date = date('now', '" + str(a) +" day')  and status = 'active' group by startime having COUNT(*) >= " + str(max_slots)
             print(query)
             total_slots = []
             for i in range(8, 16):

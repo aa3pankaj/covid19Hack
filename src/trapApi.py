@@ -8,7 +8,7 @@ from api.userApi.GetAllMerchantByCategory import GetAllMerchantByCategory
 from api.userApi.GetAvailableSlotsApi import GetAvailableSlotsApi
 from api.commonApi.ReturnSlotInformationApi import ReturnSlotInformationApi
 from api.commonApi.RegistrationApi import RegistrationApi
-
+from api.commonApi.GetProfileInfoApi import GetProfileInfoApi
 from api.userApi.BookSlotApi import BookSlotApi
 from flask_migrate import Migrate
 from utils.database import *
@@ -44,8 +44,8 @@ if __name__ == "__main__":
         api.add_resource(BookSlotApi, "/bookSlot")
         api.add_resource(ReturnSlotInformationApi, "/getSlotInformation")
         api.add_resource(RegistrationApi, "/register")
-        
-        
+        api.add_resource(GetProfileInfoApi, "/getProfileInfo")
+
         # api.add_resource(GenerateTestSuite, "/lma/generateTestSuite")
         #logging.info("Api Running on port %s " % (configReader.apiPort))
         app.run(debug=False, host='0.0.0.0', port=5051, threaded=True)

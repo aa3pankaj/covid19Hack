@@ -23,50 +23,30 @@ class ReturnSlotInformationApi(Resource):
         police_user_id = data["police_user_id"]
        
         try:
-            slot = db.session.query(Slot).filter(Slot.slot_id==slot_id).all()
-            
-            print("in")
-            for s in slot:
-              print(slot.slot_id)
-              print("out")
-            # print(slot.count())
-            #print(str(slot[0].slot_id))
-            print("------------0")
-            # if(slot.count>0):   
-            #     print("________1")
-               
-            #     slotInfo["booking_date"]=slot[0].booking_date
-                
-            #     slotInfo["start_time"]=slot[0].startTime
-            #     slotInfo["end_time"]=slot[0].endTime
-            #     #current_count
-
-            #     slot_user_id=slot.user_id
-            #     merchant_id=slot.merchant_id
-            #     print("________2")
-            #     now = datetime.now()
-            #     print("________2")
-            #     if(slotInfo["booking_date"]<now):
-            #         print("________3")
-            #         slotInfo["status"]="invalid"
-            #     else:
-            #         print("________4")
-            #         slotInfo["status"]="valid"
-            #         merchant=Merchant.query.filter(merchant_id=merchant_id)
-            #         merchantInfo["merchant_id"]=merchant_id
-            #         merchantInfo["shop_name"]=merchant[0].shopName
-            #         merchantInfo["shop_category"]=merchant[0].shopCategory
-            #         merchantInfo["max_people_per_slot"]=merchant[0].maxPeoplePerSlot
-            #         merchantInfo["lat"]=merchant[0].lat
-            #         merchantInfo["lng"]=merchant[0].long
-            #     print(merchantInfo)
-            #     data["merchant_details"]=merchantInfo
-            #     data["slot_info"]=slotInfo
-            #     print(data)
-            data=""
-            
-            message="OK"
-            return self.response("200","false",data,message)
+            slot = Slot.query.get(slot_id)
+            if(slot):   
+                slotInfo["booking_date"]=str(slot.booking_date) 
+                slotInfo["start_time"]=slot.startTime
+                slotInfo["end_time"]=slot.endTime
+                slot_user_id=slot.user_id
+                merchant_id=slot.merchant_id 
+                now = datetime.now()
+                if(slot.booking_date<now):
+                    slotInfo["status"]="invalid"
+                else:
+                    slotInfo["status"]="valid"
+                    merchant=Merchant.query.get(merchant_id)
+                    merchantInfo["merchant_id"]=merchant_id
+                    merchantInfo["shop_name"]=merchant.shopName
+                    merchantInfo["shop_category"]=merchant.shopCategory
+                    merchantInfo["max_people_per_slot"]=merchant.maxPeoplePerSlot
+                    merchantInfo["lat"]=merchant.lat
+                    merchantInfo["lng"]=merchant.lng
+                data={}
+                data["merchantInfo"]=merchantInfo
+                data["slot_info"]=slotInfo
+                message="OK"
+                return self.response("200","false",data,message)
         except Exception as err:
             message = err
             return self.response("503","true", {}, message)
