@@ -129,11 +129,18 @@ class RegistrationApi(Resource):
             result = None
 
 
+<<<<<<< HEAD
     def response(self, responseCode,hasError,message,data):
+=======
+    def response(self, responseCode,message,data):
+>>>>>>> 01316e062f3b1b8f0ee7a0be67c33104c6f44063
         response = {}
         response['responseCode'] = responseCode
         response['message'] = message
         response['data'] = data
+<<<<<<< HEAD
         response['hasError']=hasError
+=======
+>>>>>>> 01316e062f3b1b8f0ee7a0be67c33104c6f44063
         return response
 
