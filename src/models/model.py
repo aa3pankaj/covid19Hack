@@ -3,6 +3,7 @@ import datetime
 from sqlalchemy.ext.hybrid import hybrid_method
 from sqlalchemy.sql.expression import func
 import math
+from geoalchemy2.types import Geometry
 
 class Users(db.Model):
     __tablename__ = 'users'
@@ -36,8 +37,9 @@ class NormalUser(db.Model):
     __tablename__ = 'normal_user'
     normal_user_id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     electricity_bill_number = db.Column(db.String, nullable=False)
-    lat = db.Column(db.Numeric(10,6))
-    lng = db.Column(db.Numeric(10,6))
+    lat = db.Column(db.Numeric(10,10))
+    lng = db.Column(db.Numeric(10,10))
+    #geom = db.Column(Geometry(geometry_type='POINT', srid=4326))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     #user = db.relationship("Users", backref=db.backref("Users", uselist=False))
 
@@ -60,8 +62,9 @@ class Merchant(db.Model):
     avgTime = db.Column(db.String, nullable=False)
     maxPeoplePerSlot = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    lat = db.Column(db.Numeric(10,6))
-    lng = db.Column(db.Numeric(10,6))
+    lat = db.Column(db.Numeric(10,10))
+    lng = db.Column(db.Numeric(10,10))
+    #geom = db.Column(Geometry(geometry_type='POINT', srid=4326))
     
     @hybrid_method
     def distance(self, lat, lng):
