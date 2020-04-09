@@ -9,7 +9,14 @@ from api.userApi.GetAvailableSlotsApi import GetAvailableSlotsApi
 from api.commonApi.ReturnSlotInformationApi import ReturnSlotInformationApi
 from api.commonApi.RegistrationApi import RegistrationApi
 from api.commonApi.GetProfileInfoApi import GetProfileInfoApi
+
 from api.userApi.BookSlotApi import BookSlotApi
+
+from api.merchantApi.CreateItemApi import CreateItemApi
+from api.merchantApi.UpdateItemApi import UpdateItemApi
+from api.merchantApi.DeleteItemApi import DeleteItemApi
+
+
 from flask_migrate import Migrate
 from utils.database import *
 import configparser
@@ -45,6 +52,10 @@ if __name__ == "__main__":
         api.add_resource(ReturnSlotInformationApi, "/getSlotInformation")
         api.add_resource(RegistrationApi, "/register")
         api.add_resource(GetProfileInfoApi, "/getProfileInfo")
+        api.add_resource(CreateItemApi, "/newItem")
+        api.add_resource(UpdateItemApi, "/updateItem")
+        api.add_resource(DeleteItemApi, "/deleteItem")
+
 
         # api.add_resource(GenerateTestSuite, "/lma/generateTestSuite")
         #logging.info("Api Running on port %s " % (configReader.apiPort))
