@@ -16,6 +16,7 @@ from api.merchantApi.CreateItemApi import CreateItemApi
 from api.merchantApi.UpdateItemApi import UpdateItemApi
 from api.merchantApi.DeleteItemApi import DeleteItemApi
 from api.merchantApi.GetItemsApi import GetItemsApi
+from api.userApi.BuyGift import BuyGift
 
 
 
@@ -58,6 +59,7 @@ if __name__ == "__main__":
         api.add_resource(UpdateItemApi, "/updateItem")
         api.add_resource(DeleteItemApi, "/deleteItem")
         api.add_resource(GetItemsApi, "/getItemAll")
+        api.add_resource(BuyGift, "/buyGift")
         
 
 

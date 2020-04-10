@@ -106,19 +106,22 @@ class Slot(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('normal_user.normal_user_id'))
     #user = db.relationship("Users", backref=db.backref("users", uselist=False))
 
-# class Merchant_Gift(db.Model):
-#     __tablename__ = 'shop_gift'
-#     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
-#     amount = db.Column(db.String(80), nullable=False)
-#     gift_name = db.Column(db.String(80), nullable=False)
-#     merchant_id = db.Column(db.Integer,  db.ForeignKey('Merchant.merchant_id'))
+class Merchant_Gift(db.Model):
+    __tablename__ = 'merchant_gift'
+    __table_args__ = {'extend_existing': True} 
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
+    amount = db.Column(db.String(80), nullable=False)
+    gift_name = db.Column(db.String(80), nullable=False)
+    merchant_id = db.Column(db.Integer,  db.ForeignKey('Merchant.merchant_id'))
 
-# class User_Gift(db.Model):
-#     __tablename__ = 'shop_gift'
-#     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
-#     gift_id = db.Column(db.Integer,  db.ForeignKey('Merchant_Gift.id'))
-#     booking_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-#     expiry_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+class User_Gift(db.Model):
+    __tablename__ = 'user_gift'
+    __table_args__ = {'extend_existing': True} 
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
+    gift_id = db.Column(db.Integer,  db.ForeignKey('merchant_gift.id'))
+    booking_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    expiry_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    normal_user_id = db.Column(db.Integer,  db.ForeignKey('normal_user.normal_user_id'))
 
 db.create_all()
 db.session.commit()
