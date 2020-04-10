@@ -33,21 +33,22 @@ class GetAllMerchant(Resource):
             #result=self.get_nearest(lat,lng)
 
             #math operations not possible in sqlLite3, so using Merchant.all()
-            #merchants = db.session.query(Merchant,Merchant.distance(latitude,longitude).label('distance')).having(cast('distance', sqlalchemy.Integer) < 25).order_by('distance').all()
-            merchants = Merchant.query.all()
+            merchants = db.session.query(Merchant,Merchant.distance(lat,lng).label('distance')).having(cast('distance', sqlalchemy.Integer) < 500).order_by('distance').all()
+            
+            #merchants = Merchant.query.all()
             
             merchantList = []
             for currentMerchant in merchants:
                 merchantDict = {}
-                merchantDict["merchantId"] = currentMerchant.merchant_id
-                merchantDict["shopName"] = currentMerchant.shopName
-                merchantDict["shopCategory"] = currentMerchant.shopCategory
-                merchantDict["avgTime"] = currentMerchant.avgTime
-                merchantDict["maxPeoplePerSlot"] = currentMerchant.maxPeoplePerSlot
-                merchantDict["lat"] = str(currentMerchant.lat)
-                merchantDict["lng"] = str(currentMerchant.lng)
+                merchantDict["merchantId"] = currentMerchant[0].merchant_id
+                merchantDict["shopName"] = currentMerchant[0].shopName
+                merchantDict["shopCategory"] = currentMerchant[0].shopCategory
+                merchantDict["avgTime"] = currentMerchant[0].avgTime
+                merchantDict["maxPeoplePerSlot"] = currentMerchant[0].maxPeoplePerSlot
+                merchantDict["lat"] = str(currentMerchant[0].lat)
+                merchantDict["lng"] = str(currentMerchant[0].lng)
 
-                items =  db.session.query(Shop_Item).filter(Shop_Item.merchant_id == currentMerchant.merchant_id).all()
+                items =  db.session.query(Shop_Item).filter(Shop_Item.merchant_id == currentMerchant[0].merchant_id).all()
                 print("length of items: %s"%items)
                 itemsList = []
                 for item in items:
