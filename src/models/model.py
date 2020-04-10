@@ -119,6 +119,8 @@ class User_Gift(db.Model):
     gift_id = db.Column(db.Integer,  db.ForeignKey('merchant_gift.id'))
     booking_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     expiry_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('normal_user.normal_user_id'))
+    status =  db.Column(db.String(80))
 
 db.create_all()
 db.session.commit()
