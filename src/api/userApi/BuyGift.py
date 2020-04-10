@@ -14,22 +14,27 @@ import calendar;
 import time;
 from datetime import datetime,timedelta
 from sqlalchemy import and_
-from models.model import Merchant_Gift
+from models.model import User_Gift
 
-class UpdateGiftApi(Resource):
+class BuyGift(Resource):
 
     def post(self):
-        request_data = request.data
-        merchant_id = request_data["merchant_id"]
-        amount = request_data["amount"]
-        gift_name = request_data["gift_name"]
-        try: 
-            gift=Merchant_Gift.query.filter_by(gift_name=gift_name).first()
-            gift.amount = amount
+        data = request.data
+        gift_id = data["gift_id"]
+        normal_user_id = data["normal_user_id"]
+        try:
+            
+            # datetime_object = datetime.strptime(booking_date, "%Y-%m-%d")
+            #secretKey = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(16))
+            # gift = User_Gift(user_id = normal_user_id,merchant_id = merchant_id,startime=int(start_time),endTime=int(end_time),booking_date=datetime_object,status="active",qrCode="weff")
+            gift = User_Gift(gift_id = gift_id,booking_date=datetime.now(), normal_user_id = normal_user_id)
+            
             db.session.add(gift)
             db.session.commit()
-            message = "Success"
-            return self.response("200","false",{"gift_id":gift.id,"gift_name":gift.gift_name,"amount":gift.amount},message)
+
+            data = {"user_gift_id":gift.id}
+            message = "ok"
+            return self.response("200","false",data,message)
         except Exception as err:
             message = str(err)
             return self.response("503", "true",{}, message)
