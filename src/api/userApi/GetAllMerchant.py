@@ -7,11 +7,9 @@ import logging, threading
 from utils.database import db
 import sqlalchemy
 from sqlalchemy.sql.expression import cast
-
-# from models.model import Entry
-# from models.model import Users
 from models.model import Merchant,Slot
 from models.model import Shop_Item
+from sqlalchemy.sql.expression import func
 
 class GetAllMerchant(Resource):
     def get_nearest(lat, lon):
@@ -32,23 +30,29 @@ class GetAllMerchant(Resource):
             #finding nearest row
             #result=self.get_nearest(lat,lng)
 
-            #math operations not possible in sqlLite3, so using Merchant.all()
-            merchants = db.session.query(Merchant,Merchant.distance(lat,lng).label('distance')).having(cast('distance', sqlalchemy.Integer) < 500).order_by('distance').all()
-            
+            merchants = Merchant.query.filter((func.degrees(func.acos(func.sin(func.radians(lat)) * \
+                      func.sin(func.radians(Merchant.lat)) \
+                      + func.cos(func.radians(lat)) * func.cos(func.radians(Merchant.lat)) * \
+                      func.cos(func.radians(lng-Merchant.lng)))) * 60 * 1.1515 * 1.609344) <= 500).all()
+            #merchants = db.session.query(Merchant,Merchant.distance(float(lat),float(lng)).label('distance')).having(cast('distance', sqlalchemy.Integer) < 500).order_by('distance').all()
+           
+            for currentMerchant in merchants:
+                print(currentMerchant.merchant_id)
+                
             #merchants = Merchant.query.all()
             
             merchantList = []
             for currentMerchant in merchants:
                 merchantDict = {}
-                merchantDict["merchantId"] = currentMerchant[0].merchant_id
-                merchantDict["shopName"] = currentMerchant[0].shopName
-                merchantDict["shopCategory"] = currentMerchant[0].shopCategory
-                merchantDict["avgTime"] = currentMerchant[0].avgTime
-                merchantDict["maxPeoplePerSlot"] = currentMerchant[0].maxPeoplePerSlot
-                merchantDict["lat"] = str(currentMerchant[0].lat)
-                merchantDict["lng"] = str(currentMerchant[0].lng)
+                merchantDict["merchantId"] = currentMerchant.merchant_id
+                merchantDict["shopName"] = currentMerchant.shopName
+                merchantDict["shopCategory"] = currentMerchant.shopCategory
+                merchantDict["avgTime"] = currentMerchant.avgTime
+                merchantDict["maxPeoplePerSlot"] = currentMerchant.maxPeoplePerSlot
+                merchantDict["lat"] = str(currentMerchant.lat)
+                merchantDict["lng"] = str(currentMerchant.lng)
 
-                items =  db.session.query(Shop_Item).filter(Shop_Item.merchant_id == currentMerchant[0].merchant_id).all()
+                items =  db.session.query(Shop_Item).filter(Shop_Item.merchant_id == currentMerchant.merchant_id).all()
                 print("length of items: %s"%items)
                 itemsList = []
                 for item in items:
@@ -63,8 +67,8 @@ class GetAllMerchant(Resource):
             print(merchantList)
             merchantsToSend = []
             for merchant in merchantList:
-                if self.isReachable(float(lat), float(lng), float(merchant['lat']), float(merchant['lng']), 500):
-                    merchantsToSend.append(merchant)
+                #if self.isReachable(float(lat), float(lng), float(merchant['lat']), float(merchant['lng']), 500):
+                merchantsToSend.append(merchant)
             print("merchant to send: %s"%merchantsToSend)
             message = "ok"
             return self.response("200",merchantsToSend,message)

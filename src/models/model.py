@@ -44,6 +44,13 @@ class NormalUser(db.Model):
     #user = db.relationship("Users", backref=db.backref("Users", uselist=False))
 
 def gc_distance(lat1, lng1, lat2, lng2, math=math):
+    # import pdb; pdb.set_trace()
+    # dst = (3958.75 *
+    #        math.acos(math.sin(float(lat1) / 57.2959) * math.sin(float(latitude) / 57.2960) +
+    #                  math.cos(float(lat1) / 57.2958) * math.cos(float(latitude) / 57.2958) *
+    #                  math.cos(longitude / 57.2958 - float(lon1)/57.2958)))
+    # return dst
+
     ang = math.acos(math.cos(math.radians(lat1)) *
                     math.cos(math.radians(lat2)) *
                     math.cos(math.radians(lng2) -
@@ -52,6 +59,8 @@ def gc_distance(lat1, lng1, lat2, lng2, math=math):
                     math.sin(math.radians(lat2)))
 
     return 6371 * ang
+    
+    
 
 class Merchant(db.Model):
     __tablename__ = 'Merchant'

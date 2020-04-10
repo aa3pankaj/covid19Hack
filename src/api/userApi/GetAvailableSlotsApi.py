@@ -81,7 +81,7 @@ class GetAvailableSlotsApi(Resource):
         hour = now2.hour
         today_date=datetime.today().strftime('%Y-%m-%d')
         query1=db.session.query(Slot.startime).filter(and_(Slot.merchant_id==int(merchant_id),Slot.booking_date==today_date,Slot.startime>int(hour),Slot.status=="active")).group_by(Slot.startime).having(or_(func.count(Slot.slot_id)>=int(max_slots)))
-        query2=db.session.query(Slot.startime).filter(Slot.user_id==user_id)
+        query2=db.session.query(Slot.startime).filter(and_(Slot.booking_date==today_date,Slot.user_id==user_id))
         query= query1.union(query2)
         # query = "Select startime, COUNT(*) from slot where merchant_id = " + str(merchant_id) + \
         #         " and booking_date = date('now') and startime > " + str(hour) + " and status = 'active' group by startime having COUNT(*) >= " + str(max_slots)
@@ -111,14 +111,14 @@ class GetAvailableSlotsApi(Resource):
             today_date=date.today()
             print(type(today_date))
             querySql=db.session.query(Slot.startime).filter(and_(Slot.user_id!=user_id, Slot.merchant_id==int(merchant_id),Slot.booking_date==today_date+timedelta(days=a),Slot.status=="active")).group_by(Slot.startime).having(or_(func.count(Slot.slot_id)>=int(max_slots)))
-            query2=db.session.query(Slot.startime).filter(Slot.user_id==user_id)
+            query2=db.session.query(Slot.startime).filter(and_(Slot.booking_date==today_date+timedelta(days=a),Slot.user_id==user_id))
             query1= querySql.union(query2)
 
             # query = "Select startime, COUNT(*) from Slot where merchant_id = " + str(merchant_id) + \
             #         " and booking_date = date('now', '" + str(a) +" day')  and status = 'active' group by startime having COUNT(*) >= " + str(max_slots)
             
             total_slots = []
-            for i in range(8, 16):
+            for i in range(8, 23):
                 total_slots.append(i)
             unavailable_slots = []
 
