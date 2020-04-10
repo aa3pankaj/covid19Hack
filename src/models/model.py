@@ -108,6 +108,7 @@ class Slot(db.Model):
 
 class Merchant_Gift(db.Model):
     __tablename__ = 'merchant_gift'
+    __table_args__ = {'extend_existing': True} 
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     amount = db.Column(db.String(80), nullable=False)
     gift_name = db.Column(db.String(80), nullable=False)
@@ -115,6 +116,7 @@ class Merchant_Gift(db.Model):
 
 class User_Gift(db.Model):
     __tablename__ = 'user_gift'
+    __table_args__ = {'extend_existing': True} 
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     gift_id = db.Column(db.Integer,  db.ForeignKey('merchant_gift.id'))
     booking_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
