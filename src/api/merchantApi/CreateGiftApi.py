@@ -14,8 +14,7 @@ import calendar;
 import time;
 from datetime import datetime,timedelta
 from sqlalchemy import and_
-from models.model import Shop_Item
-
+from models.model import Merchant_Gift
 
 
 class CreateGiftApi(Resource):
@@ -23,7 +22,7 @@ class CreateGiftApi(Resource):
     def post(self):
         request_data = request.data
         merchant_id = request_data["merchant_id"]
-        gift_value = request_data["gift_value"]
+        amount = request_data["amount"]
         gift_name = request_data["gift_name"]
     
         try:    
@@ -31,11 +30,11 @@ class CreateGiftApi(Resource):
             if(gifts.count()>0):
                message="Gift already exist"
                return self.response("200","true","",message)
-            gift=Merchant_Gift(merchant_id=merchant_id,gift_name=gift_name,gift_value=gift_value)
+            gift=Merchant_Gift(merchant_id=merchant_id,gift_name=gift_name,amount=amount)
             db.session.add(gift)
             db.session.commit()
             message = "Success"
-            return self.response("200","false","",message)
+            return self.response("200","false",{"gift_id":gift.id,"gift_name":gift.gift_name,"amount":gift.amount},message)
         except Exception as err:
             message = str(err)
             return self.response("503", "true",{}, message)
