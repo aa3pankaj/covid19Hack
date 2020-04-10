@@ -6,6 +6,8 @@ from flask_migrate import Migrate
 
 
 app = FlaskAPI(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///covid4New.db'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://dbUser:access@3.17.180.234/covid'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///covid4New.db'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db, compare_type=True)

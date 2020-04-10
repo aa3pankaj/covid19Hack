@@ -19,7 +19,7 @@ class GetProfileInfoApi(Resource):
         normal_user=NormalUser.query.get(normal_user_id)
         user=Users.query.get(user_id)
         normalUserInfo={}
-        normalUserInfo["normal_user_id"]=normal_user_id
+        normalUserInfo["user_id"]=normal_user_id
         normalUserInfo["phoneNumber"]=user.phonenumber
         normalUserInfo["firstName"]=user.firstname
         normalUserInfo["lastName"]=user.lastname

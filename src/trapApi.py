@@ -15,6 +15,8 @@ from api.userApi.BookSlotApi import BookSlotApi
 from api.merchantApi.CreateItemApi import CreateItemApi
 from api.merchantApi.UpdateItemApi import UpdateItemApi
 from api.merchantApi.DeleteItemApi import DeleteItemApi
+from api.merchantApi.GetItemsApi import GetItemsApi
+
 
 
 from flask_migrate import Migrate
@@ -55,6 +57,8 @@ if __name__ == "__main__":
         api.add_resource(CreateItemApi, "/newItem")
         api.add_resource(UpdateItemApi, "/updateItem")
         api.add_resource(DeleteItemApi, "/deleteItem")
+        api.add_resource(GetItemsApi, "/getItemAll")
+        
 
 
         # api.add_resource(GenerateTestSuite, "/lma/generateTestSuite")

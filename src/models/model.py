@@ -8,11 +8,11 @@ from geoalchemy2.types import Geometry
 class Users(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
-    phonenumber = db.Column(db.String, nullable=False)
-    firstname = db.Column(db.String)
-    lastname = db.Column(db.String)
-    passwordhash = db.Column(db.String)
-    references = db.Column(db.String)
+    phonenumber = db.Column(db.String(80), nullable=False)
+    firstname = db.Column(db.String(80))
+    lastname = db.Column(db.String(80))
+    passwordhash = db.Column(db.String(80))
+    references = db.Column(db.String(80))
 
     def __repr__(self):
         return "(%r, %r, %r, %r)" % (self.phonenumber, self.firstname, self.lastname, self.passwordhash)
@@ -21,7 +21,7 @@ class Users(db.Model):
 class Roles(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
-    roleType = db.Column(db.String, nullable=False)
+    roleType = db.Column(db.String(80), nullable=False)
 
 
 class User_Roles(db.Model):
@@ -36,9 +36,9 @@ class User_Roles(db.Model):
 class NormalUser(db.Model):
     __tablename__ = 'normal_user'
     normal_user_id = db.Column(db.Integer, primary_key=True,autoincrement=True)
-    electricity_bill_number = db.Column(db.String, nullable=False)
-    lat = db.Column(db.Numeric(10,10))
-    lng = db.Column(db.Numeric(10,10))
+    electricity_bill_number = db.Column(db.String(80), nullable=False)
+    lat = db.Column(db.String(80))
+    lng = db.Column(db.String(80))
     #geom = db.Column(Geometry(geometry_type='POINT', srid=4326))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     #user = db.relationship("Users", backref=db.backref("Users", uselist=False))
@@ -56,14 +56,14 @@ def gc_distance(lat1, lng1, lat2, lng2, math=math):
 class Merchant(db.Model):
     __tablename__ = 'Merchant'
     merchant_id = db.Column(db.Integer, primary_key=True,autoincrement=True)
-    shopName = db.Column(db.String, nullable=False)
-    gstNumber = db.Column(db.String, nullable=False)
-    shopCategory = db.Column(db.String, nullable=False)
-    avgTime = db.Column(db.String, nullable=False)
-    maxPeoplePerSlot = db.Column(db.String, nullable=False)
+    shopName = db.Column(db.String(80), nullable=False)
+    gstNumber = db.Column(db.String(80), nullable=False)
+    shopCategory = db.Column(db.String(80), nullable=False)
+    avgTime = db.Column(db.String(80), nullable=False)
+    maxPeoplePerSlot = db.Column(db.String(80), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    lat = db.Column(db.Numeric(10,10))
-    lng = db.Column(db.Numeric(10,10))
+    lat = db.Column(db.String(80))
+    lng = db.Column(db.String(80))
     #geom = db.Column(Geometry(geometry_type='POINT', srid=4326))
     
     @hybrid_method
@@ -80,7 +80,7 @@ class Shop_Item(db.Model):
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     merchant_id = db.Column(db.Integer, db.ForeignKey('Merchant.merchant_id'))
     #merchant = db.relationship("Merchant", backref=db.backref("merchant", uselist=False))
-    item_value = db.Column(db.String, nullable=False)
+    item_value = db.Column(db.String(80), nullable=False)
 
 
 class Slot(db.Model):
@@ -89,12 +89,12 @@ class Slot(db.Model):
     startime = db.Column(db.Integer)
     endTime = db.Column(db.Integer)
     booking_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    status = db.Column(db.String, nullable=False)
-    qrCode = db.Column(db.String, nullable=True)
+    status = db.Column(db.String(80), nullable=False)
+    qrCode = db.Column(db.String(80), nullable=True)
     current_count= db.Column(db.Integer, nullable=True)
     #merchant = db.relationship("Merchant", backref=db.backref("merchant", uselist=False))
     merchant_id = db.Column(db.Integer,  db.ForeignKey('Merchant.merchant_id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('normal_user.normal_user_id'))
     #user = db.relationship("Users", backref=db.backref("users", uselist=False))
 
 
@@ -103,4 +103,4 @@ db.session.commit()
 
 # class Item(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
-#     item_name = db.Column(db.String, nullable=False)
+#     item_name = db.Column(db.String(80), nullable=False)

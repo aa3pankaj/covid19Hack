@@ -10,6 +10,9 @@ from sqlite3 import Error
 from models.model import Merchant
 from models.model import Users
 from models.model import NormalUser
+from models.model import User_Roles
+from models.model import Roles
+
 from utils.database import db
 from api.commonApi.MahaDiscomApi import MahaDiscomApi
 
@@ -41,6 +44,25 @@ class RegistrationApi(Resource):
             #Duplicate electricity bill number check
             normal_user=NormalUser.query.filter_by(electricity_bill_number=electricity_bill_number)
             merchant_id_ToSend = []
+
+            #-----------------------
+            # role=Roles(roleType='merchant')
+            # role2=Roles(roleType='normalUser')
+            # role3=Roles(roleType='police')
+            # db.session.add(role)
+
+            # db.session.commit()
+            # db.session.add(role2)
+
+            # db.session.commit()
+            # db.session.add(role3)
+
+            # db.session.commit()
+            #-----------------------
+
+
+
+
             if normal_user.count() > 0:
                 return self.response("200","true","Duplicate electricity_bill_number", merchant_id_ToSend)
 
@@ -53,6 +75,10 @@ class RegistrationApi(Resource):
             new_user=Users(firstname=firstname,lastname=lastname,phonenumber=phone,passwordhash=password)
             db.session.add(new_user)
             db.session.commit()
+            user_role1=User_Roles(user_id=new_user.id,role_id=2)
+            db.session.add(user_role1)
+            db.session.commit()
+
             print("new user created")
             print(new_user.id)
             new_normal_user=NormalUser(user_id=new_user.id,electricity_bill_number=electricity_bill_number,lat=lat,lng=lng)
@@ -60,7 +86,7 @@ class RegistrationApi(Resource):
             db.session.commit()
             data={}
             userInfo = {
-                "user_id": new_user.id
+                "user_id": new_normal_user.normal_user_id
             }  
             data['userInfo']=userInfo
             return self.response("200","false","success", data)
@@ -81,6 +107,11 @@ class RegistrationApi(Resource):
             new_user=Users(firstname=firstname,lastname=lastname,phonenumber=phone,passwordhash=password)
             db.session.add(new_user)
             db.session.commit()
+
+            user_role1=User_Roles(user_id=new_user.id,role_id=3)
+            db.session.add(user_role1)
+            db.session.commit()
+
             print("new user created")
             print(new_user.id)
             data={}
@@ -114,6 +145,12 @@ class RegistrationApi(Resource):
             new_user=Users(phonenumber=phone,passwordhash=password)
             db.session.add(new_user)
             db.session.commit()
+
+
+            user_role1=User_Roles(user_id=new_user.id,role_id=1)
+            db.session.add(user_role1)
+            db.session.commit()
+
             print("new user created")
             print(new_user.id)
             new_merchant=Merchant(shopName=name,gstNumber=gst,shopCategory=shopType,avgTime="",maxPeoplePerSlot=max_slots,user_id=new_user.id,lat=lat,lng=lng)

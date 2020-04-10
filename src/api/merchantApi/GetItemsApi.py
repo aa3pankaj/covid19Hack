@@ -14,27 +14,25 @@ import calendar;
 import time;
 from datetime import datetime,timedelta
 from sqlalchemy import and_
+from models.model import Shop_Item
 
-
-class BookSlotApi(Resource):
+class GetItemsApi(Resource):
 
     def post(self):
-        data = request.data
-        start_time = data["start_time"]
-        end_time = data["end_time"]
-        booking_date= data["booking_date"]
-        normal_user_id = data["user_id"]
-        merchant_id = data["merchant_id"]
-        try:
-            
-            datetime_object = datetime.strptime(booking_date, "%Y-%m-%d")
-            #secretKey = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(16))
-            slot = Slot(user_id = normal_user_id,merchant_id = merchant_id,startime=int(start_time),endTime=int(end_time),booking_date=datetime_object,status="active",qrCode="weff")
-            db.session.add(slot)
-            db.session.commit()
-
-            data = {"slot_id":slot.slot_id}
-            message = "ok"
+        request_data = request.data
+        merchant_id = request_data["merchant_id"]
+        try: 
+            items=Shop_Item.query.filter_by(merchant_id=merchant_id).all()
+            data={}
+            itemsList = []
+            for item in items:
+                print("item: %s"%item)
+                itemDict = {}
+                itemDict["id"] = item.id
+                itemDict["item_value"] = item.item_value
+                itemsList.append(itemDict)
+            data['items']=itemsList
+            message = "Success"
             return self.response("200","false",data,message)
         except Exception as err:
             message = str(err)
