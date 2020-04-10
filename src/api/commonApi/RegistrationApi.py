@@ -59,6 +59,7 @@ class RegistrationApi(Resource):
 
             # db.session.commit()
             #-----------------------
+            #Test comment
 
 
 
