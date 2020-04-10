@@ -17,7 +17,7 @@ class GetProfileInfoApi(Resource):
     def getNormalUserProfile(self,normal_user_id):
        
         normal_user=NormalUser.query.get(normal_user_id)
-        user=Users.query.get(user_id)
+        user=Users.query.get(normal_user.user_id)
         normalUserInfo={}
         normalUserInfo["user_id"]=normal_user_id
         normalUserInfo["phoneNumber"]=user.phonenumber
