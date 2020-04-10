@@ -34,6 +34,11 @@ class ReturnSlotInformationApi(Resource):
                
                 slot_user_id=slot.user_id
                 merchant_id=slot.merchant_id 
+                #check for qr not valid for this merchant
+                if "merchant_id" in request_data:
+                    if merchant_id!=int(request_data["merchant_id"]):
+                        return self.response("200","true","","invalid for this merchant")
+
                 hourNow=datetime.now().hour
                 now = datetime.now().date()
                 #timestamp = datetime.now()
@@ -43,7 +48,7 @@ class ReturnSlotInformationApi(Resource):
                     return self.response("200","true","","invalid")
                 else:
                    
-                    if slot.booking_date==now:
+                    if slot.booking_date.date()==now:
                         if slot.startime < hourNow:
                             return self.response("200","true","","invalid")
             
