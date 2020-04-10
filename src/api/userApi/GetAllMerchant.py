@@ -71,8 +71,7 @@ class GetAllMerchant(Resource):
                 merchantsToSend.append(merchant)
             print("merchant to send: %s"%merchantsToSend)
             message = "ok"
-            return self.response("200",merchantsToSend,message)
-            return self.response("200","","")
+            return self.response("200","false",merchantsToSend,message)
         except threading.ThreadError as err:
             logging.error(str(err))
             result = None
@@ -84,9 +83,12 @@ class GetAllMerchant(Resource):
         dy = abs(lat - mlat) * ky
         return math.sqrt(dx * dx + dy * dy) <= km
 
-    def response(self, responseCode,data,message):
+    def response(self, responseCode,hasError,data,message):
         response = {}
         response['responseCode'] = responseCode
+        response['hasError'] = hasError
         response['message'] = message
-        response['merchants'] = data
+        response['data'] = data
+        
+
         return response
