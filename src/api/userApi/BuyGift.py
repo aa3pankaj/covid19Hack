@@ -32,7 +32,7 @@ class BuyGift(Resource):
             db.session.add(gift)
             db.session.commit()
 
-            data = {"gift_id":gift.id}
+            data = {"purchase_id":gift.id}
             message = "ok"
             return self.response("200","false",data,message)
         except Exception as err:
