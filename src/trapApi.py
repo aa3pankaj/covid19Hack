@@ -69,11 +69,7 @@ if __name__ == "__main__":
         api.add_resource(GetAllActiveGiftsApi, "/getAllActiveGifts")
         api.add_resource(GetItemsApi, "/getItemAll")
         api.add_resource(BuyGift, "/buyGift")
-        api.add_resource(CreateGiftApi, "/newGift")
-        api.add_resource(DeleteGiftApi, "/deleteGift")
-        api.add_resource(UpdateGiftApi, "/updateGift")
-
-
+     
         # api.add_resource(GenerateTestSuite, "/lma/generateTestSuite")
         #logging.info("Api Running on port %s " % (configReader.apiPort))
         app.run(debug=False, host='0.0.0.0', port=5051, threaded=True)
