@@ -21,11 +21,13 @@ class UpdateGiftApi(Resource):
     def post(self):
         request_data = request.data
         merchant_id = request_data["merchant_id"]
+        gift_id= request_data["gift_id"]
         amount = request_data["amount"]
         gift_name = request_data["gift_name"]
         try: 
-            gift=Merchant_Gift.query.filter_by(gift_name=gift_name).first()
+            gift=Merchant_Gift.query.get(gift_id)
             gift.amount = amount
+            gift.gift_name=gift_name
             db.session.add(gift)
             db.session.commit()
             message = "Success"
