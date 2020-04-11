@@ -21,6 +21,7 @@ from api.userApi.BuyGift import BuyGift
 from api.merchantApi.CreateGiftApi import CreateGiftApi
 from api.merchantApi.DeleteGiftApi import DeleteGiftApi
 from api.merchantApi.UpdateGiftApi import UpdateGiftApi
+from api.merchantApi.GetAllGifts import GetAllGifts
 
 from api.userApi.GetAllActiveGiftsApi import GetAllActiveGiftsApi
 
@@ -69,7 +70,9 @@ if __name__ == "__main__":
         api.add_resource(GetAllActiveGiftsApi, "/getAllActiveGifts")
         api.add_resource(GetItemsApi, "/getItemAll")
         api.add_resource(BuyGift, "/buyGift")
-     
+        api.add_resource(GetAllGifts, "/getAllGifts")
+
+
         # api.add_resource(GenerateTestSuite, "/lma/generateTestSuite")
         #logging.info("Api Running on port %s " % (configReader.apiPort))
         app.run(debug=False, host='0.0.0.0', port=5051, threaded=True)
