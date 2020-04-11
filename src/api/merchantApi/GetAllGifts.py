@@ -4,7 +4,6 @@ from flask_restful import Resource, Api, reqparse
 from flask import request
 import logging, threading
 import shutil
-from models.model import Slot
 from utils.database import db
 import json
 import copy
@@ -14,31 +13,31 @@ import calendar;
 import time;
 from datetime import datetime,timedelta
 from sqlalchemy import and_
-from models.model import User_Gift
+from models.model import Merchant_Gift
 
-class BuyGift(Resource):
+class GetAllGifts(Resource):
 
     def post(self):
         data = request.data
-        gift_id = data["gift_id"]
-        user_id = data["user_id"]
+        merchant_id = data["merchant_id"]
+
         try:
             
-            # datetime_object = datetime.strptime(booking_date, "%Y-%m-%d")
-            #secretKey = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(16))
-            # gift = User_Gift(user_id = normal_user_id,merchant_id = merchant_id,startime=int(start_time),endTime=int(end_time),booking_date=datetime_object,status="active",qrCode="weff")
-            gift = User_Gift(gift_id = gift_id,booking_date=datetime.now(), user_id = user_id, status = 'active')
-            
-            db.session.add(gift)
-            db.session.commit()
-
-            data = {"gift_id":gift.id}
-            message = "ok"
+            gifts=Merchant_Gift.query.filter_by(merchant_id=merchant_id).all()
+            data={}
+            giftsToSend = []
+            for gift in gifts:
+                giftDict = {}
+                giftDict["amount"] = gift.amount
+                giftDict["gift_name"] = gift.gift_name
+                giftDict["id"] = gift.id
+                giftsToSend.append(giftDict)
+            data['gifts']=giftsToSend
+            message = "Success"
             return self.response("200","false",data,message)
         except Exception as err:
             message = str(err)
             return self.response("503", "true",{}, message)
-
 
     def response(self, responseCode,hasError,data,message):
         response = {}

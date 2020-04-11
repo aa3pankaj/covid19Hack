@@ -21,6 +21,7 @@ from api.userApi.BuyGift import BuyGift
 from api.merchantApi.CreateGiftApi import CreateGiftApi
 from api.merchantApi.DeleteGiftApi import DeleteGiftApi
 from api.merchantApi.UpdateGiftApi import UpdateGiftApi
+from api.merchantApi.GetAllGifts import GetAllGifts
 
 from flask_migrate import Migrate
 from utils.database import *
@@ -66,6 +67,7 @@ if __name__ == "__main__":
         api.add_resource(CreateGiftApi, "/newGift")
         api.add_resource(DeleteGiftApi, "/deleteGift")
         api.add_resource(UpdateGiftApi, "/updateGift")
+        api.add_resource(GetAllGifts, "/getAllGifts")
 
 
         # api.add_resource(GenerateTestSuite, "/lma/generateTestSuite")
