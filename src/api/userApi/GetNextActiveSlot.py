@@ -49,11 +49,9 @@ class GetNextActiveSlot(Resource):
                   
                 data={}
                 message="valid"
-                return self.response("200","false",slotInfo,message)
-        else:
-                return self.response("200","true","","No Active Slot")
+                return self.response("200","false",message,slotInfo)
             
-        return slotInfo
+        return self.response("200","true","No Active Slot","")
 
     def post(self):
         try:

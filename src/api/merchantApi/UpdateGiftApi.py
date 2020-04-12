@@ -22,10 +22,14 @@ class UpdateGiftApi(Resource):
         
         try: 
             request_data = request.data
-            merchant_id = request_data["merchant_id"]
             amount = request_data["amount"]
             gift_name = request_data["gift_name"]
-            gift=Merchant_Gift.query.filter_by(gift_name=gift_name, merchant_id = merchant_id, status = "active").first()
+            gift_id = request_data["gift_id"]
+
+            gift=Merchant_Gift.query.filter_by(id=gift_id, status = "active").first()
+            if gift is None:
+                message="Gift does not exist"
+                return self.response("200","true","",message)
             gift.amount = amount
             gift.gift_name=gift_name
             db.session.add(gift)
