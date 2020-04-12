@@ -54,7 +54,7 @@ class GetAllMerchant(Resource):
                 merchantDict["lat"] = str(currentMerchant.lat)
                 merchantDict["lng"] = str(currentMerchant.lng)
 
-                items =  db.session.query(Shop_Item).filter(Shop_Item.merchant_id == currentMerchant.merchant_id).all()
+                items =  Shop_Item.query.filter_by(merchant_id = currentMerchant.merchant_id, status = "active").all()
                 print("length of items: %s"%items)
                 itemsList = []
                 for item in items:
