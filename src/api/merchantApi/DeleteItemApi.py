@@ -19,15 +19,18 @@ from models.model import Shop_Item
 class DeleteItemApi(Resource):
 
     def post(self):
-        data = request.data
-        merchant_id = data["merchant_id"]
-        item_value = data["item_value"]
         try: 
-            item=Shop_Item.query.filter_by(item_value=item_value).first()
+            data = request.data
+            merchant_id = data["merchant_id"]
+            item_value = data["item_value"]
+            item=Shop_Item.query.filter_by(item_value=item_value, merchant_id = merchant_id, status = "active").first()
             if item:
-               db.session.delete(item)
-            db.session.commit()
-            message = "Success"
+                item.status = "inactive"
+                message = "success"
+                db.session.add(item)
+                db.session.commit()
+            else:
+                message = "No such item found."    
             return self.response("200","false","",message)
         except Exception as err:
             message = str(err)

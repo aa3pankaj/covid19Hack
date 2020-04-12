@@ -18,22 +18,22 @@ from models.model import Merchant_Gift
 class GetAllGifts(Resource):
 
     def post(self):
-        data = request.data
-        merchant_id = data["merchant_id"]
+        
 
         try:
-            
-            gifts=Merchant_Gift.query.filter_by(merchant_id=merchant_id).all()
+            data = request.data
+            merchant_id = data["merchant_id"]
+            gifts=Merchant_Gift.query.filter_by(merchant_id=merchant_id, status = "active").all()
             data={}
             giftsToSend = []
             for gift in gifts:
                 giftDict = {}
                 giftDict["amount"] = gift.amount
                 giftDict["gift_name"] = gift.gift_name
-                giftDict["id"] = gift.id
+                giftDict["gift_id"] = gift.id
                 giftsToSend.append(giftDict)
-            data['gifts']=giftsToSend
-            message = "Success"
+            data=giftsToSend
+            message = "success"
             return self.response("200","false",data,message)
         except Exception as err:
             message = str(err)

@@ -25,15 +25,15 @@ class BuyGift(Resource):
         try:
             
             # datetime_object = datetime.strptime(booking_date, "%Y-%m-%d")
-            #secretKey = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(16))
+            # secretKey = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(16))
             # gift = User_Gift(user_id = normal_user_id,merchant_id = merchant_id,startime=int(start_time),endTime=int(end_time),booking_date=datetime_object,status="active",qrCode="weff")
-            gift = User_Gift(gift_id = gift_id,booking_date=datetime.now(), user_id = user_id, status = 'active')
+            gift = User_Gift(gift_id = gift_id,booking_date=datetime.now(), user_id = user_id, status = "active")
             
             db.session.add(gift)
             db.session.commit()
 
             data = {"purchase_id":gift.id}
-            message = "ok"
+            message = "success"
             return self.response("200","false",data,message)
         except Exception as err:
             message = str(err)

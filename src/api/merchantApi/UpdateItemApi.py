@@ -19,12 +19,16 @@ from models.model import Shop_Item
 class UpdateItemApi(Resource):
 
     def post(self):
-        data = request.data
-        merchant_id = data["merchant_id"]
-        old_value = data["old_value"]
-        new_value = data["new_value"]
+        
         try: 
-            item=Shop_Item.query.filter_by(item_value=old_value).first()
+            data = request.data
+            merchant_id = data["merchant_id"]
+            old_value = data["old_value"]
+            new_value = data["new_value"]
+            item=Shop_Item.query.filter_by(merchant_id = merchant_id, item_value=old_value, status = "active").first()
+            if item is None:
+                message="Item does not exist"
+                return self.response("200","true","",message)
             item.item_value = new_value
             db.session.add(item)
             db.session.commit()

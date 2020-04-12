@@ -19,19 +19,19 @@ from models.model import Merchant_Gift
 class UpdateGiftApi(Resource):
 
     def post(self):
-        request_data = request.data
-        merchant_id = request_data["merchant_id"]
-        gift_id= request_data["gift_id"]
-        amount = request_data["amount"]
-        gift_name = request_data["gift_name"]
+        
         try: 
-            gift=Merchant_Gift.query.get(gift_id)
+            request_data = request.data
+            merchant_id = request_data["merchant_id"]
+            amount = request_data["amount"]
+            gift_name = request_data["gift_name"]
+            gift=Merchant_Gift.query.filter_by(gift_name=gift_name, merchant_id = merchant_id, status = "active").first()
             gift.amount = amount
             gift.gift_name=gift_name
             db.session.add(gift)
             db.session.commit()
-            message = "Success"
-            return self.response("200","false",{"gift_id":gift.id,"gift_name":gift.gift_name,"amount":gift.amount},message)
+            message = "success"
+            return self.response("200","false",{},message)
         except Exception as err:
             message = str(err)
             return self.response("503", "true",{}, message)
