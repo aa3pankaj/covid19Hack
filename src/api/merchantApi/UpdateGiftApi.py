@@ -25,7 +25,9 @@ class UpdateGiftApi(Resource):
             merchant_id = request_data["merchant_id"]
             amount = request_data["amount"]
             gift_name = request_data["gift_name"]
-            gift=Merchant_Gift.query.filter_by(gift_name=gift_name, merchant_id = merchant_id, status = "active").first()
+            gift_id = request_data["gift_id"]
+
+            gift=Merchant_Gift.query.filter_by(id=gift_id, merchant_id = merchant_id, status = "active").first()
             gift.amount = amount
             gift.gift_name=gift_name
             db.session.add(gift)
