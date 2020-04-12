@@ -23,8 +23,8 @@ class DeleteGiftApi(Resource):
         try:
             data = request.data
             merchant_id = data["merchant_id"]
-            gift_name = data["gift_name"]     
-            gift=Merchant_Gift.query.filter_by(gift_name=gift_name, merchant_id = merchant_id, status = "active").first()
+            gift_id = data["gift_id"]    
+            gift=Merchant_Gift.query.filter_by(id=gift_id, merchant_id = merchant_id, status = "active").first()
             if gift:
                 gift.status = "inactive"
                 message = "success"
