@@ -90,6 +90,7 @@ class Shop_Item(db.Model):
     merchant_id = db.Column(db.Integer, db.ForeignKey('Merchant.merchant_id'))
     #merchant = db.relationship("Merchant", backref=db.backref("merchant", uselist=False))
     item_value = db.Column(db.String(80), nullable=False)
+    status = db.Column(db.String(80), nullable=False)
 
 
 class Slot(db.Model):
@@ -113,6 +114,7 @@ class Merchant_Gift(db.Model):
     amount = db.Column(db.String(80), nullable=False)
     gift_name = db.Column(db.String(80), nullable=False)
     merchant_id = db.Column(db.Integer,  db.ForeignKey('Merchant.merchant_id'))
+    status = db.Column(db.String(80), nullable=False)
 
 class User_Gift(db.Model):
     __tablename__ = 'user_gift'

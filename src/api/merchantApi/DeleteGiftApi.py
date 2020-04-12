@@ -19,15 +19,19 @@ from models.model import Merchant_Gift
 class DeleteGiftApi(Resource):
 
     def post(self):
-        data = request.data
-        merchant_id = data["merchant_id"]
-        gift_name = data["gift_name"]
-        try: 
-            gift=Merchant_Gift.query.filter_by(gift_name=gift_name).first()
+        
+        try:
+            data = request.data
+            merchant_id = data["merchant_id"]
+            gift_name = data["gift_name"]     
+            gift=Merchant_Gift.query.filter_by(gift_name=gift_name, merchant_id = merchant_id, status = "active").first()
             if gift:
-               db.session.delete(gift)
-            db.session.commit()
-            message = "Success"
+                gift.status = "inactive"
+                message = "success"
+                db.session.add(gift)
+                db.session.commit()
+            else:
+                message = "No such gift found."
             return self.response("200","false","",message)
         except Exception as err:
             message = str(err)

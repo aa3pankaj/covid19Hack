@@ -57,11 +57,11 @@ class GetProfileInfoApi(Resource):
             request_data = request.data
             data={}
             if(request_data["userType"]=="merchant"):
-                data["merchantInfo"]=self.getMerchantUserProfile(request_data["merchant_id"])
+                data=self.getMerchantUserProfile(request_data["merchant_id"])
             elif(request_data["userType"]=="normalUser"):
-                data["normalUserInfo"]=self.getNormalUserProfile(request_data["normal_user_id"])
+                data=self.getNormalUserProfile(request_data["normal_user_id"])
             elif(request_data["userType"]=="police"):
-                data["policeInfo"]=self.getGeneralProfileInfo(request_data["police_user_id"])
+                data=self.getGeneralProfileInfo(request_data["police_user_id"])
             return self.response("200", "false","success", data)
         except threading.ThreadError as err:
             logging.error(str(err))

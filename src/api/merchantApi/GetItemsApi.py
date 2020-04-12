@@ -19,10 +19,11 @@ from models.model import Shop_Item
 class GetItemsApi(Resource):
 
     def post(self):
-        request_data = request.data
-        merchant_id = request_data["merchant_id"]
+        
         try: 
-            items=Shop_Item.query.filter_by(merchant_id=merchant_id).all()
+            request_data = request.data
+            merchant_id = request_data["merchant_id"]
+            items=Shop_Item.query.filter_by(merchant_id=merchant_id, status = "active").all()
             data={}
             itemsList = []
             for item in items:
@@ -31,8 +32,8 @@ class GetItemsApi(Resource):
                 itemDict["id"] = item.id
                 itemDict["item_value"] = item.item_value
                 itemsList.append(itemDict)
-            data['items']=itemsList
-            message = "Success"
+            data=itemsList
+            message = "success"
             return self.response("200","false",data,message)
         except Exception as err:
             message = str(err)
