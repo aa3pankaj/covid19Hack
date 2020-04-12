@@ -10,6 +10,8 @@ from sqlalchemy.sql.expression import cast
 from models.model import Merchant,Slot
 from models.model import Shop_Item
 from sqlalchemy.sql.expression import func
+from utils.Constants import radius
+
 
 class GetAllMerchant(Resource):
     def get_nearest(lat, lon):
@@ -33,7 +35,7 @@ class GetAllMerchant(Resource):
             merchants = Merchant.query.filter((func.degrees(func.acos(func.sin(func.radians(lat)) * \
                       func.sin(func.radians(Merchant.lat)) \
                       + func.cos(func.radians(lat)) * func.cos(func.radians(Merchant.lat)) * \
-                      func.cos(func.radians(lng-Merchant.lng)))) * 60 * 1.1515 * 1.609344) <= 500).all()
+                      func.cos(func.radians(lng-Merchant.lng)))) * 60 * 1.1515 * 1.609344) <= radius).all()
             #merchants = db.session.query(Merchant,Merchant.distance(float(lat),float(lng)).label('distance')).having(cast('distance', sqlalchemy.Integer) < 500).order_by('distance').all()
            
             for currentMerchant in merchants:
