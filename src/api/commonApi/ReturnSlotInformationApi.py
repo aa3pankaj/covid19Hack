@@ -21,7 +21,6 @@ class ReturnSlotInformationApi(Resource):
     def post(self):
         request_data = request.data
         slot_id = request_data["slot_id"]
-        #police_user_id = data["police_user_id"]
        
         try:
             slot = Slot.query.get(slot_id)
@@ -44,21 +43,20 @@ class ReturnSlotInformationApi(Resource):
                 #timestamp = datetime.now()
                
                 merchantInfo={}
-                if(slot.booking_date.date()<now):
-                    return self.response("200","true","","invalid")
-                else:
-                   
-                    if slot.booking_date.date()==now:
-                        if slot.startime < hourNow:
+                if "merchant_id" in request_data:
+                    if(slot.booking_date.date()<now):
+                        return self.response("200","true","","invalid")
+                    elif slot.booking_date.date()==now:
+                        if slot.endTime < hourNow:
                             return self.response("200","true","","invalid")
             
-                    merchant=Merchant.query.get(merchant_id)
-                    merchantInfo["merchant_id"]=merchant_id
-                    merchantInfo["shop_name"]=merchant.shopName
-                    merchantInfo["shop_category"]=merchant.shopCategory
-                    merchantInfo["max_people_per_slot"]=merchant.maxPeoplePerSlot
-                    merchantInfo["lat"]=str(merchant.lat)
-                    merchantInfo["lng"]=str(merchant.lng)
+                merchant=Merchant.query.get(merchant_id)
+                merchantInfo["merchant_id"]=merchant_id
+                merchantInfo["shop_name"]=merchant.shopName
+                merchantInfo["shop_category"]=merchant.shopCategory
+                merchantInfo["max_people_per_slot"]=merchant.maxPeoplePerSlot
+                merchantInfo["lat"]=str(merchant.lat)
+                merchantInfo["lng"]=str(merchant.lng)
                   
                 data={}
                 

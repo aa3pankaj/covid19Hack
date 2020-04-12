@@ -23,6 +23,9 @@ from api.merchantApi.DeleteGiftApi import DeleteGiftApi
 from api.merchantApi.UpdateGiftApi import UpdateGiftApi
 from api.merchantApi.GetAllGifts import GetAllGifts
 
+from api.userApi.GetAllActiveGiftsApi import GetAllActiveGiftsApi
+from api.userApi.GetNextActiveSlot import GetNextActiveSlot
+
 from flask_migrate import Migrate
 from utils.database import *
 import configparser
@@ -61,13 +64,14 @@ if __name__ == "__main__":
         api.add_resource(CreateItemApi, "/newItem")
         api.add_resource(UpdateItemApi, "/updateItem")
         api.add_resource(DeleteItemApi, "/deleteItem")
-        api.add_resource(GetItemsApi, "/getItemAll")
-        api.add_resource(BuyGift, "/buyGift")
-        
         api.add_resource(CreateGiftApi, "/newGift")
         api.add_resource(DeleteGiftApi, "/deleteGift")
         api.add_resource(UpdateGiftApi, "/updateGift")
+        api.add_resource(GetAllActiveGiftsApi, "/getAllActiveGifts")
+        api.add_resource(GetItemsApi, "/getItemAll")
+        api.add_resource(BuyGift, "/buyGift")
         api.add_resource(GetAllGifts, "/getAllGifts")
+        api.add_resource(GetNextActiveSlot, "/getNextActiveSlotDetails")
 
 
         # api.add_resource(GenerateTestSuite, "/lma/generateTestSuite")
