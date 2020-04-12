@@ -42,7 +42,7 @@ class CreateGiftApi(Resource):
             db.session.add(gift)
             db.session.commit()
             message = "success"
-            return self.response("200","false",{},message)
+            return self.response("200","false",{"gift_id":gift.id},message)
         except Exception as err:
             message = str(err)
             return self.response("503", "true",{}, message)
