@@ -22,17 +22,18 @@ class UpdateItemApi(Resource):
         
         try: 
             data = request.data
-            merchant_id = data["merchant_id"]
-            old_value = data["old_value"]
-            new_value = data["new_value"]
-            item=Shop_Item.query.filter_by(merchant_id = merchant_id, item_value=old_value, status = "active").first()
-            if item is None:
+            item_id = data["id"]
+            item_value = data["item_value"]
+            print(item_id)
+            # item=Shop_Item.query.filter_by(id = item_id, status = "active").first()
+            item=Shop_Item.query.get(item_id)
+            if item.status == "inactive":
                 message="Item does not exist"
                 return self.response("200","true","",message)
-            item.item_value = new_value
+            item.item_value = item_value
             db.session.add(item)
             db.session.commit()
-            message = "Success"
+            message = "success"
             return self.response("200","false","",message)
         except Exception as err:
             message = str(err)

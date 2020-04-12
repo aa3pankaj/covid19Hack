@@ -21,9 +21,8 @@ class DeleteItemApi(Resource):
     def post(self):
         try: 
             data = request.data
-            merchant_id = data["merchant_id"]
-            item_value = data["item_value"]
-            item=Shop_Item.query.filter_by(item_value=item_value, merchant_id = merchant_id, status = "active").first()
+            item_id = data["id"]
+            item=Shop_Item.query.filter_by(id=item_id, status = "active").first()
             if item:
                 item.status = "inactive"
                 message = "success"
