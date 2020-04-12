@@ -20,21 +20,29 @@ from models.model import Merchant_Gift
 class CreateGiftApi(Resource):
 
     def post(self):
-        request_data = request.data
-        merchant_id = request_data["merchant_id"]
-        amount = request_data["amount"]
-        gift_name = request_data["gift_name"]
     
         try:    
-            gifts=Merchant_Gift.query.filter_by(gift_name=gift_name)
+            request_data = request.data
+            merchant_id = request_data["merchant_id"]
+            amount = request_data["amount"]
+            gift_name = request_data["gift_name"]
+            gifts=Merchant_Gift.query.filter_by(gift_name=gift_name, merchant_id = merchant_id, status = "active")
+            giftsInactive = Merchant_Gift.query.filter_by(gift_name=gift_name, merchant_id = merchant_id, amount = amount, status = "inactive")
             if(gifts.count()>0):
-               message="Gift already exist"
-               return self.response("200","true","",message)
-            gift=Merchant_Gift(merchant_id=merchant_id,gift_name=gift_name,amount=amount)
+                message="Gift already exist"
+                return self.response("200","true","",message)
+            elif giftsInactive.count() > 0:
+                gift=giftsInactive.first()
+                gift.status = "active"
+                message = 'success'
+                db.session.add(gift)
+                db.session.commit()
+                return self.response("200","true","",message)
+            gift=Merchant_Gift(merchant_id=merchant_id,gift_name=gift_name,amount=amount, status = "active")
             db.session.add(gift)
             db.session.commit()
-            message = "Success"
-            return self.response("200","false",{"gift_id":gift.id,"gift_name":gift.gift_name,"amount":gift.amount},message)
+            message = "success"
+            return self.response("200","false",{},message)
         except Exception as err:
             message = str(err)
             return self.response("503", "true",{}, message)
