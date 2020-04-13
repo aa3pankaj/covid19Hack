@@ -23,9 +23,9 @@ class CreateGiftApi(Resource):
     
         try:    
             request_data = request.data
-            merchant_id = request_data["merchant_id"]
+            merchant_id = request_data["merchantId"]
             amount = request_data["amount"]
-            gift_name = request_data["gift_name"]
+            gift_name = request_data["giftName"]
             gifts=Merchant_Gift.query.filter_by(gift_name=gift_name, merchant_id = merchant_id, status = "active")
             giftsInactive = Merchant_Gift.query.filter_by(gift_name=gift_name, merchant_id = merchant_id, amount = amount, status = "inactive")
             if(gifts.count()>0):
@@ -42,7 +42,7 @@ class CreateGiftApi(Resource):
             db.session.add(gift)
             db.session.commit()
             message = "success"
-            return self.response("200","false",{"gift_id":gift.id},message)
+            return self.response("200","false",{"giftId":gift.id},message)
         except Exception as err:
             message = str(err)
             return self.response("503", "true",{}, message)

@@ -22,13 +22,16 @@ class GetAllMerchant(Resource):
 
     def post(self):
         data = request.data
-        if "latitude" in data and "longitude" in data:
-            lat = data["latitude"]
-            lng = data["longitude"]
+        if "lat" in data and "lng" in data:
+            lat = data["lat"]
+            lng = data["lng"]
         else:
             message = "Bad request"
             return self.response("408", {}, message)
         try:
+            print("*************Lat-Lng*************")
+            print(lat)
+            print(lng)
             #finding nearest row
             #result=self.get_nearest(lat,lng)
 
@@ -37,6 +40,10 @@ class GetAllMerchant(Resource):
                       + func.cos(func.radians(lat)) * func.cos(func.radians(Merchant.lat)) * \
                       func.cos(func.radians(lng-Merchant.lng)))) * 60 * 1.1515 * 1.609344) <= radius).all()
             #merchants = db.session.query(Merchant,Merchant.distance(float(lat),float(lng)).label('distance')).having(cast('distance', sqlalchemy.Integer) < 500).order_by('distance').all()
+            print("*************query*************")
+            print(merchants)
+            print("**************************")
+            logging.error(merchants)
            
             for currentMerchant in merchants:
                 print(currentMerchant.merchant_id)
@@ -61,10 +68,14 @@ class GetAllMerchant(Resource):
                     print("item: %s"%item)
                     itemDict = {}
                     itemDict["id"] = item.id
-                    itemDict["item_value"] = item.item_value
+                    itemDict["itemValue"] = item.item_value
                     itemsList.append(itemDict)
                 merchantDict["items"] = itemsList
                 merchantList.append(merchantDict)
+                print("*************MerchantList*****************")
+                print(merchantList)
+                print("******************************")
+                logging.error(merchantList)
 
             print(merchantList)
             merchantsToSend = []
@@ -73,6 +84,9 @@ class GetAllMerchant(Resource):
                 merchantsToSend.append(merchant)
             print("merchant to send: %s"%merchantsToSend)
             message = "ok"
+            print("********merchantsToSend*******")
+            logging.error("*******merchantsToSend*******")
+            logging.error(merchantsToSend)
             return self.response("200","false",merchantsToSend,message)
         except threading.ThreadError as err:
             logging.error(str(err))

@@ -24,8 +24,8 @@ class CreateItemApi(Resource):
         
         try:
             data = request.data
-            merchant_id = data["merchant_id"]
-            item_value = data["item_value"]
+            merchant_id = data["merchantId"]
+            item_value = data["itemValue"]
             items=Shop_Item.query.filter_by(item_value=item_value, merchant_id = merchant_id, status = "active")
             itemsInactive=Shop_Item.query.filter_by(item_value=item_value, merchant_id = merchant_id, status = "inactive")
             if(items.count()>0):
@@ -37,12 +37,12 @@ class CreateItemApi(Resource):
                 message = 'success'
                 db.session.add(item)
                 db.session.commit()
-                return self.response("200","true","",message)
+                return self.response("200","true",{"id":item.id},message)
             item=Shop_Item(merchant_id=merchant_id,item_value=item_value, status = "active")
             db.session.add(item)
             db.session.commit()
             message = "success"
-            return self.response("200","false","",message)
+            return self.response("200","false",{"id":item.id},message)
         except Exception as err:
             message = str(err)
             return self.response("503", "true",{}, message)

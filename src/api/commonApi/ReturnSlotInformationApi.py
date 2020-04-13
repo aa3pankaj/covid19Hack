@@ -20,22 +20,22 @@ class ReturnSlotInformationApi(Resource):
 
     def post(self):
         request_data = request.data
-        slot_id = request_data["slot_id"]
+        slot_id = request_data["slotId"]
        
         try:
             slot = Slot.query.get(slot_id)
             slotInfo={}
             if(slot):   
                
-                slotInfo["booking_date"]=str(slot.booking_date.date()) 
-                slotInfo["start_time"]=slot.startime
-                slotInfo["end_time"]=slot.endTime
+                slotInfo["bookingDate"]=str(slot.booking_date.date()) 
+                slotInfo["startTime"]=slot.startime
+                slotInfo["endTime"]=slot.endTime
                
                 slot_user_id=slot.user_id
                 merchant_id=slot.merchant_id 
                 #check for qr not valid for this merchant
-                if "merchant_id" in request_data:
-                    if merchant_id!=int(request_data["merchant_id"]):
+                if "merchantId" in request_data:
+                    if merchant_id!=int(request_data["merchantId"]):
                         return self.response("200","true","","invalid for this merchant")
 
                 hourNow=datetime.now().hour
@@ -43,7 +43,7 @@ class ReturnSlotInformationApi(Resource):
                 #timestamp = datetime.now()
                
                 merchantInfo={}
-                if "merchant_id" in request_data:
+                if "merchantId" in request_data:
                     if(slot.booking_date.date()<now):
                         return self.response("200","true","","invalid")
                     elif slot.booking_date.date()==now:
@@ -51,17 +51,17 @@ class ReturnSlotInformationApi(Resource):
                             return self.response("200","true","","invalid")
             
                 merchant=Merchant.query.get(merchant_id)
-                merchantInfo["merchant_id"]=merchant_id
-                merchantInfo["shop_name"]=merchant.shopName
-                merchantInfo["shop_category"]=merchant.shopCategory
-                merchantInfo["max_people_per_slot"]=merchant.maxPeoplePerSlot
+                merchantInfo["merchantId"]=merchant_id
+                merchantInfo["shopName"]=merchant.shopName
+                merchantInfo["shopCategory"]=merchant.shopCategory
+                merchantInfo["maxPeoplePerSlot"]=merchant.maxPeoplePerSlot
                 merchantInfo["lat"]=str(merchant.lat)
                 merchantInfo["lng"]=str(merchant.lng)
                   
                 data={}
                 
                 data["merchantInfo"]=merchantInfo
-                data["slot_info"]=slotInfo
+                data["slotInfo"]=slotInfo
                 message="valid"
                 return self.response("200","false",data,message)
             else:

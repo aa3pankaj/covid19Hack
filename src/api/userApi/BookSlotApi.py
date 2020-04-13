@@ -20,11 +20,11 @@ class BookSlotApi(Resource):
 
     def post(self):
         data = request.data
-        start_time = data["start_time"]
-        end_time = data["end_time"]
-        booking_date= data["booking_date"]
-        normal_user_id = data["user_id"]
-        merchant_id = data["merchant_id"]
+        start_time = data["startTime"]
+        end_time = data["endTime"]
+        booking_date= data["bookingDate"]
+        normal_user_id = data["userId"]
+        merchant_id = data["merchantId"]
         try:
             
             datetime_object = datetime.strptime(booking_date, "%Y-%m-%d")
@@ -33,7 +33,7 @@ class BookSlotApi(Resource):
             db.session.add(slot)
             db.session.commit()
 
-            data = {"slot_id":slot.slot_id}
+            data = {"slotId":slot.slot_id}
             message = "ok"
             return self.response("200","false",data,message)
         except Exception as err:

@@ -23,7 +23,7 @@ class GetAllActiveGiftsApi(Resource):
 
     def post(self):
         request_data = request.data
-        normal_user_id = request_data["user_id"]
+        normal_user_id = request_data["userId"]
         try: 
             purchased_gifts = db.session.query(User_Gift.gift_id,func.count(User_Gift.gift_id)).filter(and_(User_Gift.user_id==normal_user_id,User_Gift.status=="active")).group_by(User_Gift.gift_id).all()
             print(purchased_gifts)
@@ -31,9 +31,9 @@ class GetAllActiveGiftsApi(Resource):
             giftList=[]
             for purchased_gift in purchased_gifts:
                 giftInfo={}
-                giftInfo["gift_id"]=purchased_gift[0]
+                giftInfo["giftId"]=purchased_gift[0]
                 gift=Merchant_Gift.query.get(purchased_gift[0])
-                giftInfo["gift_name"]=gift.gift_name
+                giftInfo["giftName"]=gift.gift_name
                 giftInfo["amount"]=gift.amount
                 giftInfo["count"]=purchased_gift[1]
                 giftList.append(giftInfo)
