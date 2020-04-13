@@ -23,8 +23,8 @@ class UpdateGiftApi(Resource):
         try: 
             request_data = request.data
             amount = request_data["amount"]
-            gift_name = request_data["gift_name"]
-            gift_id = request_data["gift_id"]
+            gift_name = request_data["giftName"]
+            gift_id = request_data["giftId"]
 
             gift=Merchant_Gift.query.filter_by(id=gift_id, status = "active").first()
             if gift is None:

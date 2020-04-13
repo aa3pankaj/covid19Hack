@@ -22,15 +22,15 @@ class GetAllGifts(Resource):
 
         try:
             data = request.data
-            merchant_id = data["merchant_id"]
+            merchant_id = data["merchantId"]
             gifts=Merchant_Gift.query.filter_by(merchant_id=merchant_id, status = "active").all()
             data={}
             giftsToSend = []
             for gift in gifts:
                 giftDict = {}
                 giftDict["amount"] = gift.amount
-                giftDict["gift_name"] = gift.gift_name
-                giftDict["gift_id"] = gift.id
+                giftDict["giftName"] = gift.gift_name
+                giftDict["giftId"] = gift.id
                 giftsToSend.append(giftDict)
             data=giftsToSend
             message = "success"

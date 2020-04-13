@@ -23,7 +23,7 @@ class UpdateItemApi(Resource):
         try: 
             data = request.data
             item_id = data["id"]
-            item_value = data["item_value"]
+            item_value = data["itemValue"]
             print(item_id)
             # item=Shop_Item.query.filter_by(id = item_id, status = "active").first()
             item=Shop_Item.query.get(item_id)

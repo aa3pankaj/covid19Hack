@@ -14,9 +14,9 @@ class GetAllMerchantByCategory(Resource):
 
     def post(self):
         data = request.data
-        if "latitude" in data and "longitude" in data:
-            lat = data["latitude"]
-            long = data["longitude"]
+        if "lat" in data and "lng" in data:
+            lat = data["lat"]
+            long = data["lng"]
             shopCategory = data["category"]
         else:
             message = "Bad request"
@@ -36,7 +36,7 @@ class GetAllMerchantByCategory(Resource):
                 merchantDict["avgTime"] = currentMerchant.avgTime
                 merchantDict["maxPeoplePerSlot"] = currentMerchant.maxPeoplePerSlot
                 merchantDict["lat"] = currentMerchant.lat
-                merchantDict["long"] = currentMerchant.long
+                merchantDict["lng"] = currentMerchant.long
 
                 items =  db.session.query(Shop_Item).filter(Shop_Item.merchant_id == currentMerchant.merchant_id).all()
                 print("length of items: %s"%items)
@@ -45,7 +45,7 @@ class GetAllMerchantByCategory(Resource):
                     print("item: %s"%item)
                     itemDict = {}
                     itemDict["id"] = item.id
-                    itemDict["item_value"] = item.item_value
+                    itemDict["itemValue"] = item.item_value
                     itemsList.append(itemDict)
                 merchantDict["items"] = itemsList
                 merchantList.append(merchantDict)
@@ -53,7 +53,7 @@ class GetAllMerchantByCategory(Resource):
             print(merchantList)
             merchantsToSend = []
             for merchant in merchantList:
-                if self.isReachable(float(lat), float(long), float(merchant['lat']), float(merchant['long']), 15):
+                if self.isReachable(float(lat), float(long), float(merchant['lat']), float(merchant['lng']), 15):
                     merchantsToSend.append(merchant)
 
             # entry = Users(phonenumber="758868814", firstname="Roshan",lastname="Borale",passwordhash="936736332")

@@ -22,9 +22,13 @@ from api.merchantApi.CreateGiftApi import CreateGiftApi
 from api.merchantApi.DeleteGiftApi import DeleteGiftApi
 from api.merchantApi.UpdateGiftApi import UpdateGiftApi
 from api.merchantApi.GetAllGifts import GetAllGifts
+from api.merchantApi.CreateGiftAllApi import CreateGiftAllApi
 
 from api.userApi.GetAllActiveGiftsApi import GetAllActiveGiftsApi
 from api.userApi.GetNextActiveSlot import GetNextActiveSlot
+
+
+
 
 from flask_migrate import Migrate
 from utils.database import *
@@ -72,7 +76,7 @@ if __name__ == "__main__":
         api.add_resource(BuyGift, "/buyGift")
         api.add_resource(GetAllGifts, "/getAllGifts")
         api.add_resource(GetNextActiveSlot, "/getNextActiveSlotDetails")
-
+        api.add_resource(CreateGiftAllApi, "/createGiftAll")
 
         # api.add_resource(GenerateTestSuite, "/lma/generateTestSuite")
         #logging.info("Api Running on port %s " % (configReader.apiPort))

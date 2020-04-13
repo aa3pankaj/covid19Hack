@@ -27,13 +27,13 @@ class RegistrationApi(Resource):
             #return mahadiscom.is_consumer_valid()
 
     def registerNormalUser(self,data):
-            phone = data['phone_number']
+            phone = data['phoneNumber']
             firstname = data['firstName']
             lastname = data['lastName']
             lat = data['lat']
-            lng = data['long']
+            lng = data['lng']
             password=data['password']
-            electricity_bill_number=data['electricity_bill_number']
+            electricity_bill_number=data['electricityBillNumber']
             #bunit=data['bunit']
             #ctype=data['ctype']
 
@@ -86,15 +86,16 @@ class RegistrationApi(Resource):
             db.session.add(new_normal_user)
             db.session.commit()
             data={}
-            userInfo = {
-                "user_id": new_normal_user.normal_user_id
-            }  
-            data['userInfo']=userInfo
+            # userInfo = {
+            #     "userId": new_normal_user.normal_user_id
+            # }  
+            #data['userInfo']=userInfo
+            data= {"userId":new_normal_user.normal_user_id}
             return self.response("200","false","success", data)
             print(userInfo)
             
     def registerPoliceUser(self,data):
-            phone = data['phone_number']
+            phone = data['phoneNumber']
             firstname = data['firstName']
             lastname = data['lastName']
             password=data['password']
@@ -116,20 +117,21 @@ class RegistrationApi(Resource):
             print("new user created")
             print(new_user.id)
             data={}
-            userInfo = {
-                "user_id": new_user.id
-            }  
-            data['userInfo']=userInfo
+            # userInfo = {
+            #     "userId": new_user.id
+            # }  
+            #data['userInfo']=userInfo
+            data= {"userId":new_user.id}
             return self.response("200","false","success", data)
             print(userInfo)
     def registerMerchant(self,data):
-            phone = data['phone_number']
-            name = data['shop_name']
-            shopType = data['shop_category']
-            gst = data['gst_number']
+            phone = data['phoneNumber']
+            name = data['shopName']
+            shopType = data['shopCategory']
+            gst = data['gstNumber']
             lat = data['lat']
-            lng = data['long']
-            max_slots = data['max_slots']
+            lng = data['lng']
+            max_slots = data['maxSlots']
             password=data['password']
             #Duplicate electricity bill number check
             merchant=Merchant.query.filter_by(gstNumber=gst)
@@ -158,10 +160,11 @@ class RegistrationApi(Resource):
             db.session.add(new_merchant)
             db.session.commit()
             data={}
-            merchantInfo = {
-                "merchant_id": new_merchant.merchant_id
-            }  
-            data['merchantInfo']=merchantInfo
+            # merchantInfo = {
+            #     "merchantId": new_merchant.merchant_id
+            # }  
+            #data['merchantInfo']=merchantInfo
+            data= {"userId":new_merchant.merchant_id}
             return self.response("200","false","success", data)
             print(merchantInfo)
             

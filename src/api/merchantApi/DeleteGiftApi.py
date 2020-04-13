@@ -19,11 +19,12 @@ from models.model import Merchant_Gift
 class DeleteGiftApi(Resource):
 
     def post(self):
-        
+
         try:
             data = request.data
-            gift_id = data["gift_id"]    
+            gift_id = data["giftId"]
             gift=Merchant_Gift.query.filter_by(id=gift_id, status = "active").first()
+
             if gift:
                 gift.status = "inactive"
                 message = "success"
