@@ -22,7 +22,7 @@ class GetItemsApi(Resource):
         
         try: 
             request_data = request.data
-            merchant_id = request_data["merchant_id"]
+            merchant_id = request_data["merchantId"]
             items=Shop_Item.query.filter_by(merchant_id=merchant_id, status = "active").all()
             data={}
             itemsList = []
@@ -30,7 +30,7 @@ class GetItemsApi(Resource):
                 print("item: %s"%item)
                 itemDict = {}
                 itemDict["id"] = item.id
-                itemDict["item_value"] = item.item_value
+                itemDict["itemValue"] = item.item_value
                 itemsList.append(itemDict)
             data=itemsList
             message = "success"

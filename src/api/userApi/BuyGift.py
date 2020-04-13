@@ -20,8 +20,8 @@ class BuyGift(Resource):
 
     def post(self):
         data = request.data
-        gift_id = data["gift_id"]
-        user_id = data["user_id"]
+        gift_id = data["giftId"]
+        user_id = data["userId"]
         try:
             
             # datetime_object = datetime.strptime(booking_date, "%Y-%m-%d")
@@ -32,7 +32,7 @@ class BuyGift(Resource):
             db.session.add(gift)
             db.session.commit()
 
-            data = {"purchase_id":gift.id}
+            data = {"purchaseId":gift.id}
             message = "success"
             return self.response("200","false",data,message)
         except Exception as err:

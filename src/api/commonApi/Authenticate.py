@@ -14,7 +14,7 @@ class Authenticate(Resource):
 
     def post(self):
         data = request.data
-        phoneNumber = data["phonenumber"]
+        phoneNumber = data["phoneNumber"]
         password = data["password"]
 
         try:
@@ -39,7 +39,7 @@ class Authenticate(Resource):
                     else:
                         return self.response("501","true","", "invalid role")
                         
-                    data={"user_id":response_user_id,"role":role}
+                    data={"userId":response_user_id,"role":role}
                     return self.response("200","false",message, data)
             message = "Invalid User"
             return self.response("501", "true",message, "")

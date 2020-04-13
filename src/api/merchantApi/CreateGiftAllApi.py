@@ -22,16 +22,13 @@ class CreateGiftAllApi(Resource):
     def post(self):
         try:    
             request_data = request.data
-            merchant_id = request_data["merchant_id"]
+            merchant_id = request_data["merchantId"]
             data_gifts = request_data["gifts"]
-            print("---------")
-            print(data_gifts)
             giftList=[]
             for gift_request in data_gifts:
-                print("*******")
-                print(gift_request)
-                gifts=Merchant_Gift.query.filter_by(gift_name=gift_request["gift_name"], merchant_id = merchant_id, status = "active")
-                giftsInactive = Merchant_Gift.query.filter_by(gift_name=gift_request["gift_name"], merchant_id = merchant_id, amount = gift_request["amount"], status = "inactive")
+               
+                gifts=Merchant_Gift.query.filter_by(gift_name=gift_request["giftName"], merchant_id = merchant_id, status = "active")
+                giftsInactive = Merchant_Gift.query.filter_by(gift_name=gift_request["giftName"], merchant_id = merchant_id, amount = gift_request["amount"], status = "inactive")
                 giftInfo={}
                 if giftsInactive.count() > 0:
                     gift=giftsInactive.first()
@@ -39,21 +36,21 @@ class CreateGiftAllApi(Resource):
                     message = 'success'
                     db.session.add(gift)
                     db.session.commit()
-                    giftInfo["gift_id"]=gift.id
-                    giftInfo["gift_name"]=gift.gift_name
+                    giftInfo["giftId"]=gift.id
+                    giftInfo["giftName"]=gift.gift_name
                     giftInfo["amount"]=gift.amount
                     
                 elif(gifts.count()==0):
-                    gift=Merchant_Gift(merchant_id=merchant_id,gift_name=gift_request["gift_name"],amount=gift_request["amount"], status = "active")
+                    gift=Merchant_Gift(merchant_id=merchant_id,gift_name=gift_request["giftName"],amount=gift_request["amount"], status = "active")
                     db.session.add(gift)
                     db.session.commit()
-                    giftInfo["gift_id"]=gift.id
-                    giftInfo["gift_name"]=gift.gift_name
+                    giftInfo["giftId"]=gift.id
+                    giftInfo["giftName"]=gift.gift_name
                     giftInfo["amount"]=gift.amount
 
                 else:
-                    giftInfo["gift_id"]=gifts[0].id
-                    giftInfo["gift_name"]=gifts[0].gift_name
+                    giftInfo["giftId"]=gifts[0].id
+                    giftInfo["giftName"]=gifts[0].gift_name
                     giftInfo["amount"]=gifts[0].amount
                 giftList.append(giftInfo)
             message = "success"

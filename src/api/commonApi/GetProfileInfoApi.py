@@ -48,11 +48,11 @@ class GetProfileInfoApi(Resource):
         user = Users.query.get(normal_user.user_id)
         activeSlots = self.getAllActiveSlotOfUser(normal_user)
         normalUserInfo={}
-        normalUserInfo["user_id"]=normal_user_id
+        normalUserInfo["userId"]=normal_user_id
         normalUserInfo["phoneNumber"]=user.phonenumber
         normalUserInfo["firstName"]=user.firstname
         normalUserInfo["lastName"]=user.lastname
-        normalUserInfo["electricity_bill_number"]=normal_user.electricity_bill_number
+        normalUserInfo["electricityBillNumber"]=normal_user.electricity_bill_number
         normalUserInfo["lat"]=str(normal_user.lat)
         normalUserInfo["lng"]=str(normal_user.lng)
         normalUserInfo["activeSlots"] = activeSlots
@@ -63,7 +63,7 @@ class GetProfileInfoApi(Resource):
         user_id=merchant.user_id
         user=Users.query.get(user_id)
         merchantInfo={}
-        merchantInfo["merchant_id"]=merchant_id
+        merchantInfo["merchantId"]=merchant_id
         merchantInfo["phoneNumber"]=user.phonenumber
         merchantInfo["shopName"]=merchant.shopName
         merchantInfo["gstNumber"]=merchant.gstNumber
@@ -76,7 +76,7 @@ class GetProfileInfoApi(Resource):
     def getGeneralProfileInfo(self,user_id):
         user=Users.query.get(user_id)
         userInfo={}
-        userInfo["user_id"]=user_id
+        userInfo["userId"]=user_id
         userInfo["phoneNumber"]=user.phonenumber
         userInfo["firstName"]=user.firstname
         userInfo["lastName"]=user.lastname
@@ -87,11 +87,11 @@ class GetProfileInfoApi(Resource):
             request_data = request.data
             data={}
             if(request_data["userType"]=="merchant"):
-                data =self.getMerchantUserProfile(request_data["merchant_id"])
+                data =self.getMerchantUserProfile(request_data["merchantId"])
             elif(request_data["userType"]=="normalUser"):
-                data =self.getNormalUserProfile(request_data["normal_user_id"])
+                data =self.getNormalUserProfile(request_data["normalUserId"])
             elif(request_data["userType"]=="police"):
-                data =self.getGeneralProfileInfo(request_data["police_user_id"])
+                data =self.getGeneralProfileInfo(request_data["policeUserId"])
             return self.response("200", "false","success", data)
         except Exception as err:
             logging.error(str(err))

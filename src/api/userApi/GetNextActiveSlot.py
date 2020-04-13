@@ -32,31 +32,34 @@ class GetNextActiveSlot(Resource):
             active_slots =  db.session.query(Slot).filter(and_(Slot.user_id==normal_user_id,Slot.status=="active",Slot.booking_date>today_date)).order_by(Slot.booking_date,Slot.startime).all()
                
         slotInfo={}
+        merchantInfo={}
+        data={}
         if(len(active_slots)>0):   
              
-                slotInfo["booking_date"]=str(active_slots[0].booking_date.date()) 
-                slotInfo["start_time"]=active_slots[0].startime
-                slotInfo["end_time"]=active_slots[0].endTime
+                slotInfo["bookingDate"]=str(active_slots[0].booking_date.date()) 
+                slotInfo["startTime"]=active_slots[0].startime
+                slotInfo["endTime"]=active_slots[0].endTime
                 slot_user_id=active_slots[0].user_id
                 merchant_id=active_slots[0].merchant_id
                 merchant=Merchant.query.get(merchant_id)
-                slotInfo["merchant_id"]=merchant_id
-                slotInfo["shop_name"]=merchant.shopName
-                slotInfo["shop_category"]=merchant.shopCategory
-                slotInfo["max_people_per_slot"]=merchant.maxPeoplePerSlot
-                slotInfo["lat"]=str(merchant.lat)
-                slotInfo["lng"]=str(merchant.lng)
-                  
-                data={}
+                merchantInfo["merchantId"]=merchant_id
+                merchantInfo["shopName"]=merchant.shopName
+                merchantInfo["shopCategory"]=merchant.shopCategory
+                merchantInfo["maxPeoplePerSlot"]=merchant.maxPeoplePerSlot
+                merchantInfo["lat"]=str(merchant.lat)
+                merchantInfo["lng"]=str(merchant.lng)
+                data["merchantInfo"]=merchantInfo
+                data["slotInfo"]=slotInfo
+                
                 message="valid"
-                return self.response("200","false",message,slotInfo)
+                return self.response("200","false",message,data)
             
         return self.response("200","true","No Active Slot","")
 
     def post(self):
         try:
             request_data = request.data
-            normal_user_id = request_data["user_id"]
+            normal_user_id = request_data["userId"]
             data={}
             return self.getActiveSlotOfUser(normal_user_id)
             

@@ -45,8 +45,8 @@ class GetAvailableSlotsApi(Resource):
 
             #database = "/Users/panssing/Downloads/generate_pass_2.0/covid19Hack/src/utils/covid4New.db"
             data = request.data
-            merchant_id = data['merchant_id']
-            user_id= data['user_id']
+            merchant_id = data['merchantId']
+            user_id= data['userId']
             #conn = self.create_connection(database)
             #max_slots = self.getMaxSlots(conn, int(merchant_id))
             merchant=Merchant.query.get(merchant_id)
@@ -97,12 +97,12 @@ class GetAvailableSlotsApi(Resource):
             available_slots = available_slots[0:max_available_slots]
 
             for slot in available_slots:
-                available_slots_to_send.append({"date": now2.strftime('%Y-%m-%d'), "starttime": int(slot), "endtime": int(slot) + 1})
+                available_slots_to_send.append({"date": now2.strftime('%Y-%m-%d'), "startTime": int(slot), "endTime": int(slot) + 1})
             return available_slots_to_send
 
         for slot in available_slots:
             available_slots_to_send.append(
-                {"date": now2.strftime('%Y-%m-%d'), "starttime": int(slot), "endtime": int(slot) + 1})
+                {"date": now2.strftime('%Y-%m-%d'), "startTime": int(slot), "endTime": int(slot) + 1})
         diff = len(available_slots) - max_available_slots
 
         a = 1
@@ -127,7 +127,7 @@ class GetAvailableSlotsApi(Resource):
 
             available_slots = np.setdiff1d(total_slots, unavailable_slots)
             for slot in available_slots:
-                available_slots_to_send.append({"date": (now2 + timedelta(days=a)).strftime('%Y-%m-%d'), "starttime": int(slot), "endtime": int(slot) + 1})
+                available_slots_to_send.append({"date": (now2 + timedelta(days=a)).strftime('%Y-%m-%d'), "startTime": int(slot), "endTime": int(slot) + 1})
             if len(available_slots_to_send) >= max_available_slots:
                 return available_slots_to_send[:max_available_slots]
             a = a + 1
