@@ -40,11 +40,6 @@ class GetAllMerchant(Resource):
                       + func.cos(func.radians(lat)) * func.cos(func.radians(Merchant.lat)) * \
                       func.cos(func.radians(lng-Merchant.lng)))) * 60 * 1.1515 * 1.609344) <= radius).all()
             #merchants = db.session.query(Merchant,Merchant.distance(float(lat),float(lng)).label('distance')).having(cast('distance', sqlalchemy.Integer) < 500).order_by('distance').all()
-            print("*************query*************")
-            print(merchants)
-            print("**************************")
-            logging.error(merchants)
-           
             for currentMerchant in merchants:
                 print(currentMerchant.merchant_id)
                 
@@ -72,10 +67,6 @@ class GetAllMerchant(Resource):
                     itemsList.append(itemDict)
                 merchantDict["items"] = itemsList
                 merchantList.append(merchantDict)
-                print("*************MerchantList*****************")
-                print(merchantList)
-                print("******************************")
-                logging.error(merchantList)
 
             print(merchantList)
             merchantsToSend = []
@@ -92,12 +83,12 @@ class GetAllMerchant(Resource):
             logging.error(str(err))
             result = None
 
-    def isReachable(self, lat, lng, mlat, mlng, km):
-        ky = float(40000.0 / 360.0)
-        kx = float(math.cos(math.pi * lat / 180.0) * ky)
-        dx = abs(lng - mlng) * kx
-        dy = abs(lat - mlat) * ky
-        return math.sqrt(dx * dx + dy * dy) <= km
+    # def isReachable(self, lat, lng, mlat, mlng, km):
+    #     ky = float(40000.0 / 360.0)
+    #     kx = float(math.cos(math.pi * lat / 180.0) * ky)
+    #     dx = abs(lng - mlng) * kx
+    #     dy = abs(lat - mlat) * ky
+    #     return math.sqrt(dx * dx + dy * dy) <= km
 
     def response(self, responseCode,hasError,data,message):
         response = {}

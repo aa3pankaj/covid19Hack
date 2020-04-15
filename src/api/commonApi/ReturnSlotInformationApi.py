@@ -43,12 +43,13 @@ class ReturnSlotInformationApi(Resource):
                 #timestamp = datetime.now()
                
                 merchantInfo={}
+
                 if "merchantId" in request_data:
-                    if(slot.booking_date.date()<now):
-                        return self.response("200","true","","invalid")
+                    if(slot.booking_date.date()<now or slot.booking_date.date()>now):
+                        return self.response("200","true","","invalid for this date")
                     elif slot.booking_date.date()==now:
-                        if slot.endTime < hourNow:
-                            return self.response("200","true","","invalid")
+                        if slot.startime > hourNow or slot.startime < hourNow :
+                            return self.response("200","true","","invalid for this slot")
             
                 merchant=Merchant.query.get(merchant_id)
                 merchantInfo["merchantId"]=merchant_id
