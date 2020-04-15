@@ -40,7 +40,15 @@ class GetAllMerchant(Resource):
                       + func.cos(func.radians(lat)) * func.cos(func.radians(Merchant.lat)) * \
                       func.cos(func.radians(lng-Merchant.lng)))) * 60 * 1.1515 * 1.609344) <= radius).all()
             #merchants = db.session.query(Merchant,Merchant.distance(float(lat),float(lng)).label('distance')).having(cast('distance', sqlalchemy.Integer) < 500).order_by('distance').all()
+<<<<<<< HEAD
         
+=======
+            print("*************query*************")
+            print(merchants)
+            print("**************************")
+            logging.error(merchants)
+           
+>>>>>>> 22d4d43b8d0be6bd86117ca57418802435e147a1
             for currentMerchant in merchants:
                 print(currentMerchant.merchant_id)
                 
@@ -68,6 +76,7 @@ class GetAllMerchant(Resource):
                     itemsList.append(itemDict)
                 merchantDict["items"] = itemsList
                 merchantList.append(merchantDict)
+
             print(merchantList)
             merchantsToSend = []
             for merchant in merchantList:
@@ -75,6 +84,9 @@ class GetAllMerchant(Resource):
                 merchantsToSend.append(merchant)
             print("merchant to send: %s"%merchantsToSend)
             message = "ok"
+            print("********merchantsToSend*******")
+            logging.error("*******merchantsToSend*******")
+            logging.error(merchantsToSend)
             return self.response("200","false",merchantsToSend,message)
         except threading.ThreadError as err:
             logging.error(str(err))

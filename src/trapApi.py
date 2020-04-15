@@ -16,6 +16,7 @@ from api.merchantApi.CreateItemApi import CreateItemApi
 from api.merchantApi.UpdateItemApi import UpdateItemApi
 from api.merchantApi.DeleteItemApi import DeleteItemApi
 from api.merchantApi.GetItemsApi import GetItemsApi
+from api.merchantApi.CreateItemAll import CreateItemAll
 from api.userApi.BuyGift import BuyGift
 
 from api.merchantApi.CreateGiftApi import CreateGiftApi
@@ -77,6 +78,7 @@ if __name__ == "__main__":
         api.add_resource(GetAllGifts, "/getAllGifts")
         api.add_resource(GetNextActiveSlot, "/getNextActiveSlotDetails")
         api.add_resource(CreateGiftAllApi, "/createGiftAll")
+        api.add_resource(CreateItemAll, "/createItemAll")
 
         # api.add_resource(GenerateTestSuite, "/lma/generateTestSuite")
         #logging.info("Api Running on port %s " % (configReader.apiPort))
