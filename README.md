@@ -39,17 +39,16 @@ We have contacted two local businesses from different cities who think enlisting
 
 We feel that our app will ensure queue management efficiently and can bring some positivity and normalcy during these testing times.
 
+<img src="https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/signin-1.jpg" width=50% height=50%>
 
-![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/signin-1.jpg) { height=50%; width=50%}
+<img src="https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Home%20screen.jpg" width=50% height=50%>
 
-![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Home%20screen.jpg) { height=50%; width=50%}
+<img src="https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Home%20screen.jpg" width=50% height=50%>
 
-![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Home%20screen.jpg) { height=50%; width=50%}
+<img src="https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Shop%20screen.jpg" width=50% height=50%>
 
-![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Shop%20screen.jpg) { height=50%; width=50%}
+<img src="https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Shop%20screen-1.jpg" width=50% height=50%>
 
-![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Shop%20screen-1.jpg) { height=50%; width=50%}
+<img src="https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/QR%20Code%20slots.jpg" width=50% height=50%>
 
-![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/QR%20Code%20slots.jpg) { height=50%; width=50%}
-
-![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/merchant%20approval.jpg) { height=50%; width=50%}
+<img src="https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/merchant%20approval.jpg" width=50% height=50%>
