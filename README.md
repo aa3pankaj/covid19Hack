@@ -1,7 +1,7 @@
 
-# About this app - QEasy
+# QEasy
 
-App demo:
+QEasy - App demo:
 ------------
 https://www.youtube.com/watch?v=E5gH4b7gTuU
 
@@ -38,3 +38,18 @@ The police can also log in to scan this QR code to verify a user is authorised t
 We have contacted two local businesses from different cities who think enlisting their business with this app will help their business during this tough situation and have also talked about sharing it with other local businesses. We think during times like this citizens with standard pay can help the local business by doing their bit.
 
 We feel that our app will ensure queue management efficiently and can bring some positivity and normalcy during these testing times.
+
+
+![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/signin-1.jpg)
+
+![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Home%20screen.jpg)
+
+![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Home%20screen.jpg)
+
+![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Shop%20screen.jpg)
+
+![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Shop%20screen-1.jpg)
+
+![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/QR%20Code%20slots.jpg)
+
+![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/merchant%20approval.jpg)
