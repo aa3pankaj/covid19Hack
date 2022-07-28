@@ -1,7 +1,7 @@
 
 # QEasy
 
-QEasy - App demo:
+App demo:
 ------------
 https://www.youtube.com/watch?v=E5gH4b7gTuU
 
@@ -40,16 +40,16 @@ We have contacted two local businesses from different cities who think enlisting
 We feel that our app will ensure queue management efficiently and can bring some positivity and normalcy during these testing times.
 
 
-![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/signin-1.jpg)
+![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/signin-1.jpg) { height=50%; width=50%}
 
-![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Home%20screen.jpg)
+![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Home%20screen.jpg) { height=50%; width=50%}
 
-![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Home%20screen.jpg)
+![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Home%20screen.jpg) { height=50%; width=50%}
 
-![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Shop%20screen.jpg)
+![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Shop%20screen.jpg) { height=50%; width=50%}
 
-![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Shop%20screen-1.jpg)
+![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Shop%20screen-1.jpg) { height=50%; width=50%}
 
-![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/QR%20Code%20slots.jpg)
+![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/QR%20Code%20slots.jpg) { height=50%; width=50%}
 
-![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/merchant%20approval.jpg)
+![alt text](https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/merchant%20approval.jpg) { height=50%; width=50%}
