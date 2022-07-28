@@ -19,8 +19,6 @@ Enlisted merchants can also enable users to buy gift card for their services whi
 
 <img src="https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Home%20screen.jpg" width=50% height=50%>
 
-<img src="https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Home%20screen.jpg" width=50% height=50%>
-
 <img src="https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Shop%20screen.jpg" width=50% height=50%>
 
 <img src="https://github.com/aa3pankaj/covid19Hack/blob/master/UI%20Images/Shop%20screen-1.jpg" width=50% height=50%>
