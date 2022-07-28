@@ -1,0 +1,3 @@
+[submodule "qeasy_frontend"]
+	path = qeasy_frontend
+	url = https://github.com/intkhabahmed/qeasy.git
